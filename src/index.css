@@ -11,3 +11,18 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.main-div {
+  display: flex;
+  flex-direction: column;
+}
+
+.secondary-div {
+  margin: 10px;
+  background-color: red;
+}
+
+.button-keypad {
+  margin: 10px;
+  background-color: red;
+}
