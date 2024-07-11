@@ -2,47 +2,28 @@
 import React from "react";
 import { connect } from "react-redux";
 
-const Counter = ({ increaseX, increaseY, decreaseX, decreaseY, playerX, playerY }) => {
-
-
+const Counter = ({ counter, increment, decrement }) => {
   return (
     <div>
-      <p className="counter_title">Player positon: X:{playerX} Y:{playerY}</p>
-
-      <div className="main-div">
-        <div className="secondary-div">
-        <button className="button-keypad" onClick={increaseY}>
-            UP
-        </button>
-        </div>
-        
-        <div className="secondary-div">
-        <button className="button-keypad" onClick={increaseX}>
-            LEFT
-        </button>
-        <button className="button-keypad" onClick={decreaseY}>
-            DOWN
-        </button>
-        <button className="button-keypad" onClick={decreaseX}>
-            RIGHT
-        </button>
-        </div>
-      </div>
+      <p className="counter_title">Counter: {counter}</p>
+      <button className="button" onClick={increment}>
+        Increment
+      </button>
+      <button className="button" onClick={decrement}>
+        Decrement
+      </button>
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
-  playerX: state.playerX,
-  playerY: state.playerY
+  counter: state.counter 
   //  Use 'counter: state.counter.counter' and replace the above line if you are using combineReducers to ensure that 'counter' matches the correct key in your store.
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    increaseX: () => dispatch({ type: "INCREASEX" }),
-    decreaseX: () => dispatch({ type: "DECREASEX" }),
-    increaseY: () => dispatch({ type: "INCREASEY" }),
-    decreaseY: () => dispatch({ type: "DECREASEY" }),
+  increment: () => dispatch({ type: "INCREMENT" }),
+  decrement: () => dispatch({ type: "DECREMENT" })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Counter);
