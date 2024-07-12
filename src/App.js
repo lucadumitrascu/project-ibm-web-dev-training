@@ -8,10 +8,10 @@ function App() {
     <div className="App">
       <p className="app-title">Game</p>
       <div className="component-map">
-      <MapBase />
+        <MapBase />
       </div>
-      <div>
-      <PlayerController className="component-player-controller"/>
+      <div className="component-player-controller">
+        <PlayerController />
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-//src/components/Counter.js
 import React from "react";
 import { connect } from "react-redux";
 import '../index.css'
@@ -17,19 +16,19 @@ const PlayerController = ({ increaseX, increaseY, decreaseX, decreaseY, playerX,
       <div className="main-div-player-controller">
 
         <div className="secondary-div-player-controller">
-          <button className="button-keypad" onClick={decreaseY} disabled={playerY === 0}>
+          <button className="button-keypad" onClick={decreaseY} disabled={playerY === 1}>
             UP
           </button>
         </div>
 
         <div className="secondary-div-player-controller">
-          <button className="button-keypad" onClick={decreaseX} disabled={playerX === 0}>
+          <button className="button-keypad" onClick={decreaseX} disabled={playerX === 1}>
             LEFT
           </button>
-          <button className="button-keypad" onClick={increaseY} disabled={playerY === 9}>
+          <button className="button-keypad" onClick={increaseY} disabled={playerY === 8}>
             DOWN
           </button>
-          <button className="button-keypad" onClick={increaseX} disabled={playerX === 9}>
+          <button className="button-keypad" onClick={increaseX} disabled={playerX === 8}>
             RIGHT
           </button>
         </div>
