@@ -49,11 +49,18 @@ code {
 }
 
 .secondary-div-player-controller {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   margin: 1px;
 }
 
 .button-keypad {
   margin: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: brown;
   font-weight: bold;
   width: 80px;
@@ -90,9 +97,168 @@ table {
 }
 
 .player-cell {
-  background-color: rgba(189, 1, 1, 0.644);
+  background-color: red;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
 
-.border-blue {
-  background-color: blue;
+@keyframes moveUp {
+  0% {
+    transform: translateY(0);
+    background-image: url("assets/playerUp1.png");
+  }
+
+  25% {
+    background-image: url("assets/playerUp2.png");
+  }
+
+  50% {
+    transform: translateY(-50%);
+    background-image: url("assets/playerUp1.png");
+  }
+
+  75% {
+    background-image: url("assets/playerUp2.png");
+  }
+
+  100% {
+    transform: translateY(-100%);
+    background-image: url("assets/playerUp.png");
+  }
+}
+
+@keyframes moveDown {
+  0% {
+    transform: translateY(0);
+    background-image: url("assets/playerDown1.png");
+  }
+
+  25% {
+    background-image: url("assets/playerDown2.png");
+  }
+
+  50% {
+    transform: translateY(50%);
+    background-image: url("assets/playerDown1.png");
+  }
+
+  75% {
+    background-image: url("assets/playerDown2.png");
+  }
+
+  100% {
+    transform: translateY(100%);
+    background-image: url("assets/playerDown.png");
+  }
+}
+
+@keyframes moveLeft {
+  0% {
+    transform: translateX(0);
+    background-image: url("assets/playerLeft1.png");
+  }
+
+  25% {
+    background-image: url("assets/playerLeft2.png");
+  }
+
+  50% {
+    transform: translateX(-50%);
+    background-image: url("assets/playerLeft1.png");
+  }
+
+  75% {
+    background-image: url("assets/playerLeft2.png");
+  }
+
+  100% {
+    transform: translateX(-100%);
+    background-image: url("assets/playerLeft.png");
+  }
+}
+
+@keyframes moveRight {
+  0% {
+    transform: translateX(0);
+    background-image: url("assets/playerRight1.png");
+  }
+
+  25% {
+    background-image: url("assets/playerRight2.png");
+  }
+
+  50% {
+    transform: translateX(50%);
+    background-image: url("assets/playerRight1.png");
+  }
+
+  75% {
+    background-image: url("assets/playerRight2.png");
+  }
+
+  100% {
+    transform: translateX(100%);
+    background-image: url("assets/playerRight.png");
+  }
+}
+
+.player-up,
+.player-down,
+.player-left,
+.player-right,
+.player-up-anim,
+.player-down-anim,
+.player-left-anim,
+.player-right-anim {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.player-up-anim {
+  background-image: url("assets/playerUp.png");
+  animation: moveUp 0.5s steps(4) forwards;
+}
+
+.player-up {
+  background-image: url("assets/playerUp.png");
+}
+
+.player-down-anim {
+  background-image: url("assets/playerDown.png");
+  animation: moveDown 0.5s steps(4) forwards;
+}
+
+.player-down {
+  background-image: url("assets/playerDown.png");
+}
+
+.player-left-anim {
+  background-image: url("assets/playerLeft.png");
+  animation: moveLeft 0.5s steps(4) forwards;
+}
+
+.player-left {
+  background-image: url("assets/playerLeft.png");
+}
+
+.player-right-anim {
+  background-image: url("assets/playerRight.png");
+  animation: moveRight 0.5s steps(4) forwards;
+}
+
+.player-right {
+  background-image: url("assets/playerRight.png");
+}
+
+.npc-cell {
+  background-color: yellow;
+}
+
+.map-border {
+  background-image: url("assets/wall.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }

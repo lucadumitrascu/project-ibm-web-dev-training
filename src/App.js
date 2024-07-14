@@ -1,5 +1,6 @@
 import React from "react";
 import PlayerController from "./components/PlayerController";
+import NpcController from "./components/NpcController";
 import MapBase from "./components/MapBase";
 import "./App.css";
 
@@ -12,6 +13,7 @@ function App() {
       </div>
       <div className="component-player-controller">
         <PlayerController />
+        <NpcController  />
       </div>
     </div>
   );

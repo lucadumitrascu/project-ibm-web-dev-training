@@ -1,8 +1,12 @@
-import { configureStore } from '@reduxjs/toolkit';
-import playerControllerReducer from '../reducers/index';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import playerControllerReducer from '../reducers/playerReducer.js';
+import npcControllerReducer from '../reducers/npcReducer.js';
 
 const store = configureStore({
-  reducer: playerControllerReducer,
+  reducer:combineReducers({
+    player: playerControllerReducer,
+    npc: npcControllerReducer
+  })
 });
 
 export default store;
