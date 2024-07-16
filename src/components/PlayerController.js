@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import '../index.css';
 
-const PlayerController = ({ setPlayerStyle, increaseX, increaseY, decreaseX, decreaseY, playerX, playerY, hp, strength }) => {
+const PlayerController = ({ setPlayerStyle, increaseX, increaseY, decreaseX, decreaseY, playerX, playerY }) => {
 
   useEffect(() => {
     const handleKeyPress = (event) => {
@@ -40,7 +40,7 @@ const PlayerController = ({ setPlayerStyle, increaseX, increaseY, decreaseX, dec
         decreaseY();
         setPlayerStyle("player-up");
         clicked = false;
-      }, 500);
+      }, 350);
     }
   };
 
@@ -52,7 +52,7 @@ const PlayerController = ({ setPlayerStyle, increaseX, increaseY, decreaseX, dec
         increaseY();
         setPlayerStyle("player-down");
         clicked = false;
-      }, 500);
+      }, 350);
     }
   };
 
@@ -64,7 +64,7 @@ const PlayerController = ({ setPlayerStyle, increaseX, increaseY, decreaseX, dec
         decreaseX();
         setPlayerStyle("player-left");
         clicked = false;
-      }, 500);
+      }, 350);
     }
   };
 
@@ -76,36 +76,28 @@ const PlayerController = ({ setPlayerStyle, increaseX, increaseY, decreaseX, dec
         increaseX();
         setPlayerStyle("player-right");
         clicked = false;
-      }, 500);
+      }, 350);
     }
   };
 
   return (
     <div>
-      <div className="div-group-title-components">
-        <p className="title-player-controller">Player position:</p>
-        <p className="title-player-controller-x"> X: {playerX}</p>
-        <p className="title-player-controller-y"> Y: {playerY}</p>
-        <p className="title-player-controller-x"> HP: {hp}</p>
-        <p className="title-player-controller-y"> Strength: {strength}</p>
-      </div>
-
       <div className="main-div-player-controller">
         <div className="secondary-div-player-controller">
           <div className="button-keypad" onClick={handleUpClick}>
-            UP
+            &#5123;
           </div>
         </div>
 
         <div className="secondary-div-player-controller">
           <div className="button-keypad" onClick={handleLeftClick}>
-            LEFT
+            &#5130;
           </div>
           <div className="button-keypad" onClick={handleDownClick}>
-            DOWN
+            &#5121;
           </div>
           <div className="button-keypad" onClick={handleRightClick}>
-            RIGHT
+            &#5125;
           </div>
         </div>
       </div>
@@ -116,8 +108,6 @@ const PlayerController = ({ setPlayerStyle, increaseX, increaseY, decreaseX, dec
 const mapStateToProps = (state) => ({
   playerX: state.player.playerX,
   playerY: state.player.playerY,
-  hp: state.player.hp,
-  strength: state.player.strength
 });
 
 const mapDispatchToProps = (dispatch) => ({

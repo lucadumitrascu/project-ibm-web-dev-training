@@ -14,16 +14,21 @@ const MapBase = ({ playerStyle, playerX, playerY, npcX, npcY }) => {
 
           cols.map(colIndex => {
             let className = "";
+
             if (playerX === colIndex && playerY === rowIndex) {
               className = playerStyle;
             }
 
-            if (rowIndex === 0 || rowIndex === 9 || colIndex === 0 || colIndex === 9) {
-              className = "map-border";
-            }
-
             if (npcX === colIndex && npcY === rowIndex) {
               className = "npc-cell";
+            }
+
+            if (npcX === colIndex && npcY === rowIndex && playerX === colIndex && playerY === rowIndex) {
+              className = `${playerStyle} npc-cell`;
+            }
+
+            if (rowIndex === 0 || rowIndex === 9 || colIndex === 0 || colIndex === 9) {
+              className = "map-border";
             }
 
             return <td key={colIndex} className={className}></td>;

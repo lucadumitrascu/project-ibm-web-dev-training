@@ -1,51 +1,124 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  padding: 0;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: hsla(21, 100%, 78%, 0.819);
+  background-image: url(/src/assets/background.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  text-shadow:
+    1px 1px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+/* PLAYER STATS */
+.div-stats-panel {
+  width: max-content;
+  margin-left: 5vw;
+  padding: 10px;
+  background-image: url(/src/assets//statsPanel.jpeg);
+  background-position: center;
+  background-size: contain;
+  border: 5px solid rgb(77, 105, 77);
+  border-radius: 20px;
+  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.5);
+}
+
+.h1-stats-title {
+  color: rgb(196, 196, 196);
+  margin: 0;
+  padding: 5px;
+}
+
+.div-hp,
+.div-str,
+.div-stats-position {
+  display: flex;
+  justify-content: space-between;
+  width: 15vw;
+}
+
+.p-stats-hp,
+.p-stats-hp-value,
+.p-stats-str,
+.p-stats-str-value,
+.p-stats-position,
+.div-stats-position-value,
+.p-stats-position-x,
+.p-stats-position-y {
+  color: rgb(255, 187, 30);
+  font-weight: bold;
+  font-size: 20px;
+  margin: 0;
+  padding: 5px;
+  align-self: center;
+  width: max-content;
+}
+
+.p-stats-position-x,
+.p-stats-position-y {
+  padding: 0px;
+  padding-left: 10px;
+}
+
+.p-stats-str,
+.p-stats-str-value {
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.div-stats-position-value {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* MAP */
+.main-div-map {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+table {
+  border-collapse: collapse;
+  background-image: url(/src/assets/floor.png);
+  background-position: center;
+}
+
+tr,
+td {
+  width: 45px;
+  height: 45px;
+  border: 1px solid black;
+}
+
+.player-cell {
+  background-color: red;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.map-border {
+  background-image: url("assets/wall.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 /* PLAYER MOVEMENT */
 .main-div-player-controller {
   display: flex;
   flex-direction: column;
-}
-
-.div-group-title-components {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.title-player-controller {
-  color: brown;
-  font-weight: bold;
-  font-size: 20px;
-}
-
-.title-player-controller-x {
-  color: rgb(73, 28, 179);
-  font-weight: bold;
-  font-size: 20px;
-  margin-left: 10px;
-}
-
-.title-player-controller-y {
-  color: rgb(133, 2, 190);
-  font-weight: bold;
-  font-size: 20px;
-  margin-left: 10px;
 }
 
 .secondary-div-player-controller {
@@ -57,50 +130,26 @@ code {
 }
 
 .button-keypad {
+  width: 80px;
+  height: 40px;
   margin: 2px;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: brown;
+  color: rgb(196, 196, 196);
   font-weight: bold;
-  width: 80px;
-  height: 40px;
-  font-size: 17px;
-  border: 0.1px dashed rgb(85, 85, 85);
+  font-size: 25px;
   border-radius: 10px;
-  background-color: hsla(21, 100%, 78%, 0.819);
+  border: 1px solid black;
+  background-image: url(/src/assets/buttonsBackground.jpeg);
+  background-position: center;
+  background-size: contain;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 .button-keypad:hover {
   cursor: pointer;
   opacity: 0.7;
-}
-
-
-/* MAP */
-.main-div-map {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-tr,
-td {
-  border: 1px solid black;
-  width: 45px;
-  height: 45px;
-}
-
-table {
-  border-collapse: collapse;
-}
-
-.player-cell {
-  background-color: red;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
 }
 
 @keyframes moveUp {
@@ -124,7 +173,7 @@ table {
 
   100% {
     transform: translateY(-100%);
-    background-image: url("assets/playerUp.png");
+    background-image: url("assets/playerUp1.png");
   }
 }
 
@@ -149,7 +198,7 @@ table {
 
   100% {
     transform: translateY(100%);
-    background-image: url("assets/playerDown.png");
+    background-image: url("assets/playerDown1.png");
   }
 }
 
@@ -174,7 +223,7 @@ table {
 
   100% {
     transform: translateX(-100%);
-    background-image: url("assets/playerLeft.png");
+    background-image: url("assets/playerLeft1.png");
   }
 }
 
@@ -217,8 +266,7 @@ table {
 }
 
 .player-up-anim {
-  background-image: url("assets/playerUp.png");
-  animation: moveUp 0.5s steps(4) forwards;
+  animation: moveUp 0.35s steps(4) forwards;
 }
 
 .player-up {
@@ -226,8 +274,7 @@ table {
 }
 
 .player-down-anim {
-  background-image: url("assets/playerDown.png");
-  animation: moveDown 0.5s steps(4) forwards;
+  animation: moveDown 0.35s steps(4) forwards;
 }
 
 .player-down {
@@ -235,8 +282,7 @@ table {
 }
 
 .player-left-anim {
-  background-image: url("assets/playerLeft.png");
-  animation: moveLeft 0.5s steps(4) forwards;
+  animation: moveLeft 0.35s steps(4) forwards;
 }
 
 .player-left {
@@ -244,8 +290,7 @@ table {
 }
 
 .player-right-anim {
-  background-image: url("assets/playerRight.png");
-  animation: moveRight 0.5s steps(4) forwards;
+  animation: moveRight 0.35s steps(4) forwards;
 }
 
 .player-right {
@@ -254,11 +299,4 @@ table {
 
 .npc-cell {
   background-color: yellow;
-}
-
-.map-border {
-  background-image: url("assets/wall.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
 }
