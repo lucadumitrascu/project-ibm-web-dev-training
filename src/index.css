@@ -81,6 +81,7 @@ code {
   align-items: center;
 }
 
+
 /* MAP */
 .main-div-map {
   display: flex;
@@ -114,6 +115,7 @@ td {
   background-repeat: no-repeat;
   background-position: center;
 }
+
 
 /* PLAYER MOVEMENT */
 .main-div-player-controller {
@@ -152,103 +154,105 @@ td {
   opacity: 0.7;
 }
 
-@keyframes moveUp {
+
+/* PLAYER ANIMATIONS */
+@keyframes movePlayerUp {
   0% {
     transform: translateY(0);
-    background-image: url("assets/playerUp1.png");
+    background-image: url("assets/playerStripes/playerUp1.png");
   }
 
   25% {
-    background-image: url("assets/playerUp2.png");
+    background-image: url("assets/playerStripes/playerUp2.png");
   }
 
   50% {
     transform: translateY(-50%);
-    background-image: url("assets/playerUp1.png");
+    background-image: url("assets/playerStripes/playerUp1.png");
   }
 
   75% {
-    background-image: url("assets/playerUp2.png");
+    background-image: url("assets/playerStripes/playerUp2.png");
   }
 
   100% {
     transform: translateY(-100%);
-    background-image: url("assets/playerUp1.png");
+    background-image: url("assets/playerStripes/playerUp1.png");
   }
 }
 
-@keyframes moveDown {
+@keyframes movePlayerDown {
   0% {
     transform: translateY(0);
-    background-image: url("assets/playerDown1.png");
+    background-image: url("assets/playerStripes/playerDown1.png");
   }
 
   25% {
-    background-image: url("assets/playerDown2.png");
+    background-image: url("assets/playerStripes/playerDown2.png");
   }
 
   50% {
     transform: translateY(50%);
-    background-image: url("assets/playerDown1.png");
+    background-image: url("assets/playerStripes/playerDown1.png");
   }
 
   75% {
-    background-image: url("assets/playerDown2.png");
+    background-image: url("assets/playerStripes/playerDown2.png");
   }
 
   100% {
     transform: translateY(100%);
-    background-image: url("assets/playerDown1.png");
+    background-image: url("assets/playerStripes/playerDown1.png");
   }
 }
 
-@keyframes moveLeft {
+@keyframes movePlayerLeft {
   0% {
     transform: translateX(0);
-    background-image: url("assets/playerLeft1.png");
+    background-image: url("assets/playerStripes/playerLeft1.png");
   }
 
   25% {
-    background-image: url("assets/playerLeft2.png");
+    background-image: url("assets/playerStripes/playerLeft2.png");
   }
 
   50% {
     transform: translateX(-50%);
-    background-image: url("assets/playerLeft1.png");
+    background-image: url("assets/playerStripes/playerLeft1.png");
   }
 
   75% {
-    background-image: url("assets/playerLeft2.png");
+    background-image: url("assets/playerStripes/playerLeft2.png");
   }
 
   100% {
     transform: translateX(-100%);
-    background-image: url("assets/playerLeft1.png");
+    background-image: url("assets/playerStripes/playerLeft1.png");
   }
 }
 
-@keyframes moveRight {
+@keyframes movePlayerRight {
   0% {
     transform: translateX(0);
-    background-image: url("assets/playerRight1.png");
+    background-image: url("assets/playerStripes/playerRight1.png");
   }
 
   25% {
-    background-image: url("assets/playerRight2.png");
+    background-image: url("assets/playerStripes/playerRight2.png");
   }
 
   50% {
     transform: translateX(50%);
-    background-image: url("assets/playerRight1.png");
+    background-image: url("assets/playerStripes/playerRight1.png");
   }
 
   75% {
-    background-image: url("assets/playerRight2.png");
+    background-image: url("assets/playerStripes/playerRight2.png");
   }
 
   100% {
     transform: translateX(100%);
-    background-image: url("assets/playerRight1.png");
+    background-image: url("assets/playerStripes/playerRight1.png");
   }
 }
 
@@ -266,39 +270,182 @@ td {
 }
 
 .player-up-anim {
-  animation: moveUp 0.35s linear;
+  animation: movePlayerUp 0.40s linear;
 }
 
 .player-up {
-  background-image: url("assets/playerUp.png");
+  background-image: url("assets/playerStripes/playerUp.png");
 }
 
 .player-down-anim {
-  animation: moveDown 0.35s linear;
+  animation: movePlayerDown 0.40s linear;
 }
 
 .player-down {
-  background-image: url("assets/playerDown.png");
+  background-image: url("assets/playerStripes/playerDown.png");
 }
 
 .player-left-anim {
-  animation: moveLeft 0.35s linear;
+  animation: movePlayerLeft 0.40s linear;
 }
 
 .player-left {
-  background-image: url("assets/playerLeft.png");
+  background-image: url("assets/playerStripes/playerLeft.png");
 }
 
 .player-right-anim {
-  animation: moveRight 0.35s linear;
+  animation: movePlayerRight 0.40s linear;
 }
 
 .player-right {
-  background-image: url("assets/playerRight.png");
+  background-image: url("assets/playerStripes/playerRight.png");
 }
 
-.npc-cell {
-  background-color: yellow;
+
+/* NPC ANIMATIONS */
+@keyframes moveNpcUp {
+  0% {
+    transform: translateY(0);
+    background-image: url("assets/npcStripes/npcUp1.png");
+  }
+
+  25% {
+    background-image: url("assets/npcStripes/npcUp2.png");
+  }
+
+  50% {
+    transform: translateY(-50%);
+    background-image: url("assets/npcStripes/npcUp1.png");
+  }
+
+  75% {
+    background-image: url("assets/npcStripes/npcUp2.png");
+  }
+
+  100% {
+    transform: translateY(-100%);
+    background-image: url("assets/npcStripes/npcUp1.png");
+  }
+}
+
+@keyframes moveNpcDown {
+  0% {
+    transform: translateY(0);
+    background-image: url("assets/npcStripes/npcDown1.png");
+  }
+
+  25% {
+    background-image: url("assets/npcStripes/npcDown2.png");
+  }
+
+  50% {
+    transform: translateY(50%);
+    background-image: url("assets/npcStripes/npcDown1.png");
+  }
+
+  75% {
+    background-image: url("assets/npcStripes/npcDown2.png");
+  }
+
+  100% {
+    transform: translateY(100%);
+    background-image: url("assets/npcStripes/npcDown1.png");
+  }
+}
+
+@keyframes moveNpcLeft {
+  0% {
+    transform: translateX(0);
+    background-image: url("assets/npcStripes/npcLeft1.png");
+  }
+
+  25% {
+    background-image: url("assets/npcStripes/npcLeft2.png");
+  }
+
+  50% {
+    transform: translateX(-50%);
+    background-image: url("assets/npcStripes/npcLeft1.png");
+  }
+
+  75% {
+    background-image: url("assets/npcStripes/npcLeft2.png");
+  }
+
+  100% {
+    transform: translateX(-100%);
+    background-image: url("assets/npcStripes/npcLeft1.png");
+  }
+}
+
+@keyframes moveNpcRight {
+  0% {
+    transform: translateX(0);
+    background-image: url("assets/npcStripes/npcRight1.png");
+  }
+
+  25% {
+    background-image: url("assets/npcStripes/npcRight2.png");
+  }
+
+  50% {
+    transform: translateX(50%);
+    background-image: url("assets/npcStripes/npcRight1.png");
+  }
+
+  75% {
+    background-image: url("assets/npcStripes/npcRight2.png");
+  }
+
+  100% {
+    transform: translateX(100%);
+    background-image: url("assets/npcStripes/npcRight1.png");
+  }
+}
+
+.npc-up,
+.npc-down,
+.npc-left,
+.npc-right,
+.npc-up-anim,
+.npc-down-anim,
+.npc-left-anim,
+.npc-right-anim {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.npc-up-anim {
+  animation: moveNpcUp 0.35s linear;
+}
+
+.npc-up {
+  background-image: url("assets/npcStripes/npcUp.png");
+}
+
+.npc-down-anim {
+  animation: moveNpcDown 0.35s linear;
+}
+
+.npc-down {
+  background-image: url("assets/npcStripes/npcDown.png");
+}
+
+.npc-left-anim {
+  animation: moveNpcLeft 0.35s linear;
+}
+
+.npc-left {
+  background-image: url("assets/npcStripes/npcLeft.png");
+}
+
+.npc-right-anim {
+  animation: moveNpcRight 0.35s linear;
+}
+
+.npc-right {
+  background-image: url("assets/npcStripes/npcRight.png");
 }
 
 

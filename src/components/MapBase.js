@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
 
-const MapBase = ({ playerStyle, playerX, playerY, npcX, npcY, setNpcX, setNpcY, setPlayerX, setPlayerY, setNpcTime }) => {
+const MapBase = ({ npcStyle, playerStyle, playerX, playerY, npcX, npcY, setNpcX, setNpcY, setPlayerX, setPlayerY, setNpcTime }) => {
 
   const MySwal = withReactContent(Swal);
 
@@ -25,7 +25,7 @@ const MapBase = ({ playerStyle, playerX, playerY, npcX, npcY, setNpcX, setNpcY, 
             }
 
             if (npcX === colIndex && npcY === rowIndex) {
-              className = "npc-cell";
+              className = npcStyle;
             }
 
             if (npcX === colIndex && npcY === rowIndex && playerX === colIndex && playerY === rowIndex) {
@@ -74,11 +74,10 @@ const MapBase = ({ playerStyle, playerX, playerY, npcX, npcY, setNpcX, setNpcY, 
                       performAttack();
                     }
                   };
-
                   enemyAttack(2000);
 
                   document.getElementById('attack-button').addEventListener('click', () => {
-                    setNpcTime(500);
+                    setNpcTime(400);
 
                     MySwal.close();
                   });
@@ -89,7 +88,7 @@ const MapBase = ({ playerStyle, playerX, playerY, npcX, npcY, setNpcX, setNpcY, 
                   });
                 }
               });
-              className = "npc-cell";
+              className = npcStyle;
             }
 
             if (rowIndex === 0 || rowIndex === 9 || colIndex === 0 || colIndex === 9) {
@@ -122,7 +121,8 @@ const mapStateToProps = (state) => ({
   playerY: state.player.playerY,
   npcX: state.npc.npcX,
   npcY: state.npc.npcY,
-  playerStyle: state.player.playerStyle
+  playerStyle: state.player.playerStyle,
+  npcStyle: state.npc.npcStyle
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -40,7 +40,7 @@ const PlayerController = ({ setPlayerStyle, increaseX, increaseY, decreaseX, dec
         decreaseY();
         setPlayerStyle("player-up");
         clicked = false;
-      }, 350);
+      }, 400);
     }
   };
 
@@ -52,7 +52,7 @@ const PlayerController = ({ setPlayerStyle, increaseX, increaseY, decreaseX, dec
         increaseY();
         setPlayerStyle("player-down");
         clicked = false;
-      }, 350);
+      }, 400);
     }
   };
 
@@ -64,7 +64,7 @@ const PlayerController = ({ setPlayerStyle, increaseX, increaseY, decreaseX, dec
         decreaseX();
         setPlayerStyle("player-left");
         clicked = false;
-      }, 350);
+      }, 400);
     }
   };
 
@@ -76,7 +76,7 @@ const PlayerController = ({ setPlayerStyle, increaseX, increaseY, decreaseX, dec
         increaseX();
         setPlayerStyle("player-right");
         clicked = false;
-      }, 350);
+      }, 400);
     }
   };
 
