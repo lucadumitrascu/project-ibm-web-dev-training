@@ -11,3 +11,47 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+/* MAP */
+.main-div-map {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+tr,
+td {
+  border: 1px solid black;
+  width: 45px;
+  height: 45px;
+  border-collapse: collapse;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+.map-border {
+  background-color: blue;
+}
+
+
+/* PLAYER */
+.player-cell {
+  background-color: red;
+}
+
+.main-div {
+  display: flex;
+  flex-direction: column;
+}
+
+.secondary-div {
+  margin: 2px;
+  margin-bottom: 0px;
+}
+
+.button-keypad {
+  margin: 2px;
+}
