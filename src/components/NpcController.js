@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import { useEffect } from "react";
 import '../index.css'
 
-const NpcController = ({ npcincreaseX, npcincreaseY, npcdecreaseX, npcdecreaseY }) => {
+const NpcController = ({ npcincreaseX, npcincreaseY, npcdecreaseX, npcdecreaseY, time }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       const randomMove = Math.floor(Math.random() * 4)
@@ -22,16 +22,15 @@ const NpcController = ({ npcincreaseX, npcincreaseY, npcdecreaseX, npcdecreaseY 
         default:
           break;
       }
-    }, 500);
+    }, time);
     return () => clearInterval(interval);
-  }, [npcincreaseX, npcincreaseY, npcdecreaseX, npcdecreaseY]);
+  }, [time]);
 
   return null;
 };
 
 const mapStateToProps = (state) => ({
-  npcX: state.npc.npcX,
-  npcY: state.npc.npcY,
+  time: state.npc.time
 });
 
 const mapDispatchToProps = (dispatch) => ({

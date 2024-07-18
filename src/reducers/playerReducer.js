@@ -8,6 +8,10 @@ const initialState = {
 
 const playerControllerReducer = (state = initialState, action) => {
   switch (action.type) {
+    case 'SET_PLAYER_X':
+      return { ...state, playerX: action.payload };
+    case 'SET_PLAYER_Y':
+      return { ...state, playerY: action.payload };
     case "SET_PLAYER_STYLE":
       return { ...state, playerStyle: action.payload };
     case "INCREASEX":

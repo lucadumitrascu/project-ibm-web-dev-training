@@ -248,7 +248,7 @@ td {
 
   100% {
     transform: translateX(100%);
-    background-image: url("assets/playerRight.png");
+    background-image: url("assets/playerRight1.png");
   }
 }
 
@@ -266,7 +266,7 @@ td {
 }
 
 .player-up-anim {
-  animation: moveUp 0.35s steps(4) forwards;
+  animation: moveUp 0.35s linear;
 }
 
 .player-up {
@@ -274,7 +274,7 @@ td {
 }
 
 .player-down-anim {
-  animation: moveDown 0.35s steps(4) forwards;
+  animation: moveDown 0.35s linear;
 }
 
 .player-down {
@@ -282,7 +282,7 @@ td {
 }
 
 .player-left-anim {
-  animation: moveLeft 0.35s steps(4) forwards;
+  animation: moveLeft 0.35s linear;
 }
 
 .player-left {
@@ -290,7 +290,7 @@ td {
 }
 
 .player-right-anim {
-  animation: moveRight 0.35s steps(4) forwards;
+  animation: moveRight 0.35s linear;
 }
 
 .player-right {
@@ -299,4 +299,47 @@ td {
 
 .npc-cell {
   background-color: yellow;
+}
+
+
+/* COMBAT */
+.modal {
+  width: 80vw !important;
+  height: 90vh !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-direction: column !important;
+  text-shadow: none !important;
+}
+
+.modal-npc-attack {
+  background-color: red !important;
+}
+
+.modal-npc-pre-attack {
+  background-color: orange !important;
+  transition: background-color 0.25s ease;
+}
+
+.modal button:hover {
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.modal button {
+  width: 10vw;
+  height: 5vh;
+  border: 0.25px solid grey;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+}
+
+.modal-button-attack {
+  background-color: rgb(237, 138, 33) !important;
+}
+
+.modal-button-defend {
+  background-color: rgb(106, 92, 255) !important;
 }
