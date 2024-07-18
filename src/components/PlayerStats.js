@@ -6,21 +6,21 @@ const PlayerStats = ({ playerX, playerY, hp, strength }) => {
 
   return (
     <div>
-      <div className="div-stats-panel">
-        <h1 className="h1-stats-title">Stats</h1>
+      <div className="div-stats-player-panel">
+        <h1 className="h1-stats-player-title">Player</h1>
         <div className="div-hp">
-          <p className="p-stats-hp"> HP </p>
-          <p className="p-stats-hp-value">{hp}</p>
+          <p className="p-stats-player-hp"> HP </p>
+          <p className="p-stats-player-hp-value">{hp}</p>
         </div>
         <div className="div-str">
-          <p className="p-stats-str"> STR </p>
-          <p className="p-stats-str-value">{strength}</p>
+          <p className="p-stats-player-str"> STR </p>
+          <p className="p-stats-player-str-value">{strength}</p>
         </div>
-        <div className="div-stats-position">
-          <p className="p-stats-position"> POS </p>
-          <div className="div-stats-position-value">
-            <p className="p-stats-position-x"> X: {playerX}</p>
-            <p className="p-stats-position-y"> Y: {playerY}</p>
+        <div className="div-stats-player-position">
+          <p className="p-stats-player-position"> POS </p>
+          <div className="div-stats-player-position-value">
+            <p className="p-stats-player-position-x"> X: {playerX}</p>
+            <p className="p-stats-player-position-y"> Y: {playerY}</p>
           </div>
         </div>
       </div>

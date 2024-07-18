@@ -20,9 +20,9 @@ code {
 }
 
 /* PLAYER STATS */
-.div-stats-panel {
+.div-stats-player-panel {
   width: max-content;
-  margin-left: 5vw;
+  margin-left: 2vw;
   padding: 10px;
   background-image: url(/src/assets//statsPanel.jpeg);
   background-position: center;
@@ -32,7 +32,7 @@ code {
   box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.5);
 }
 
-.h1-stats-title {
+.h1-stats-player-title {
   color: rgb(196, 196, 196);
   margin: 0;
   padding: 5px;
@@ -40,20 +40,83 @@ code {
 
 .div-hp,
 .div-str,
-.div-stats-position {
+.div-stats-player-position {
   display: flex;
   justify-content: space-between;
   width: 15vw;
 }
 
-.p-stats-hp,
-.p-stats-hp-value,
-.p-stats-str,
-.p-stats-str-value,
-.p-stats-position,
-.div-stats-position-value,
-.p-stats-position-x,
-.p-stats-position-y {
+.p-stats-player-hp,
+.p-stats-player-hp-value,
+.p-stats-player-str,
+.p-stats-player-str-value,
+.p-stats-player-position,
+.div-stats-player-position-value,
+.p-stats-player-position-x,
+.p-stats-player-position-y {
+  color: rgb(0, 214, 54);
+  font-weight: bold;
+  font-size: 20px;
+  margin: 0;
+  padding: 5px;
+  align-self: center;
+  width: max-content;
+}
+
+.p-stats-player-position-x,
+.p-stats-player-position-y {
+  padding: 0px;
+  padding-left: 10px;
+}
+
+.p-stats-player-str,
+.p-stats-player-str-value {
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.div-stats-player-position-value {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* NPC STATS */
+.div-stats-npc-panel {
+  width: max-content;
+  margin-right: 2vw;
+  padding: 10px;
+  background-image: url(/src/assets//statsPanel.jpeg);
+  background-position: center;
+  background-size: contain;
+  border: 5px solid rgb(77, 105, 77);
+  border-radius: 20px;
+  box-shadow: -10px 10px 15px rgba(0, 0, 0, 0.5);
+}
+
+.h1-stats-npc-title {
+  color: rgb(196, 196, 196);
+  margin: 0;
+  padding: 5px;
+}
+
+.div-hp,
+.div-str,
+.div-stats-npc-position {
+  display: flex;
+  justify-content: space-between;
+  width: 15vw;
+}
+
+.p-stats-npc-hp,
+.p-stats-npc-hp-value,
+.p-stats-npc-str,
+.p-stats-npc-str-value,
+.p-stats-npc-position,
+.div-stats-npc-position-value,
+.p-stats-npc-position-x,
+.p-stats-npc-position-y {
   color: rgb(255, 187, 30);
   font-weight: bold;
   font-size: 20px;
@@ -63,19 +126,19 @@ code {
   width: max-content;
 }
 
-.p-stats-position-x,
-.p-stats-position-y {
+.p-stats-npc-position-x,
+.p-stats-npc-position-y {
   padding: 0px;
   padding-left: 10px;
 }
 
-.p-stats-str,
-.p-stats-str-value {
+.p-stats-npc-str,
+.p-stats-npc-str-value {
   padding-right: 5px;
   padding-left: 5px;
 }
 
-.div-stats-position-value {
+.div-stats-npc-position-value {
   display: flex;
   justify-content: center;
   align-items: center;

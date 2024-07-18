@@ -17,7 +17,8 @@
 
 .component-map-stats {
   display: grid;
-  grid-template-columns: 1fr 480px 1fr;
+  grid-template-columns: 1fr 1fr 480px 1fr 1fr;
+  justify-items: center;
   margin: 0px;
   padding: 0px;
 }
