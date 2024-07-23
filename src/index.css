@@ -564,3 +564,99 @@ td {
 .modal-button-defend {
   background-color: rgb(106, 92, 255) !important;
 }
+
+.combat-card-container {
+  border: 2px solid #000;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #f4f4f4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 13vw;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.combat-card-container img {
+  width: 50px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.group-divs-hp-player,
+.group-divs-hp-npc {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.p-hp-player,
+.p-hp-npc {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+.div-progress-hp-player,
+.div-progress-hp-npc {
+  background-color: #ddd;
+  border-radius: 5px;
+  width: 100%;
+  height: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+  margin-top: 5px;
+}
+
+.div-progres-bar-hp-player,
+.div-progres-bar-hp-npc {
+  background-color: #f44336;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  line-height: 20px;
+}
+
+.group-divs-str-player,
+.group-divs-str-npc {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.p-str-player,
+.p-str-npc {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+.div-progress-str-player,
+.div-progress-str-npc {
+  background-color: #ddd;
+  border-radius: 5px;
+  width: 100%;
+  height: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+  margin-top: 5px;
+}
+
+.div-progres-bar-str-player,
+.div-progres-bar-str-npc {
+  background-color: #2196f3;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  line-height: 20px;
+}
+
+
+.modal-div {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+}

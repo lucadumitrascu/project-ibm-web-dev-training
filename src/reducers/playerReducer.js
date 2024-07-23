@@ -1,7 +1,7 @@
 const initialState = {
   playerX: 5,
   playerY: 5,
-  hp: 5,
+  hp: 1242141,
   strength: 1,
   playerStyle: "player-down"
 };

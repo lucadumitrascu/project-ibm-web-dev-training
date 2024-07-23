@@ -3,6 +3,10 @@ import { connect } from "react-redux";
 import '../index.css';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import CombatCard from "./CombatCard";
+import { createRoot } from "react-dom/client";
+import { Provider } from "react-redux";
+import store from '../store/store';
 
 const MapBase = ({
   npcStyle, playerStyle, playerX, playerY, npcX, npcY,
@@ -22,7 +26,6 @@ const MapBase = ({
   }, [hpPlayer, hpNpc]);
 
   useEffect(() => {
-
     if (npcX === playerX && npcY === playerY) {
       setNpcX(8);
       setNpcY(1);
@@ -31,8 +34,14 @@ const MapBase = ({
       setNpcTime(5000000);
       MySwal.fire({
         title: 'Combat!',
-        html: `<button id="defend-button" class="modal-button-defend">Defend</button>
-               <button id="attack-button" class="modal-button-attack">Attack</button>`,
+        html: `<div class="modal-div">
+               <div id="combat-card-player"></div>
+               <div>
+               <button id="defend-button" class="modal-button-defend">Defend</button>
+               <button id="attack-button" class="modal-button-attack">Attack</button>
+               </div>
+               <div id="combat-card-npc"></div>
+               </div>`,
         customClass: {
           popup: 'modal'
         },
@@ -40,6 +49,25 @@ const MapBase = ({
         allowOutsideClick: false,
         allowEscapeKey: false,
         didOpen: () => {
+          const playerCardContainer = document.getElementById("combat-card-player");
+          const npcCardContainer = document.getElementById("combat-card-npc");
+
+          if (playerCardContainer && npcCardContainer) {
+            const playerCardRoot = createRoot(playerCardContainer);
+            const npcCardRoot = createRoot(npcCardContainer);
+
+            playerCardRoot.render(
+              <Provider store={store}>
+                <CombatCard isPlayer={true} />
+              </Provider>
+            );
+            npcCardRoot.render(
+              <Provider store={store}>
+                <CombatCard isPlayer={false} />
+              </Provider>
+            );
+          }
+
           const modalElement = document.querySelector('.swal2-popup');
           let firstEntry = true;
           let defendClicked = false;
@@ -67,7 +95,6 @@ const MapBase = ({
                 setTimeout(() => {
                   modalElement.classList.remove('modal-npc-attack');
                   if (hpPlayerRef.current <= 0) {
-                    console.log("NPC WIN!");
                     stopGame = true;
 
                     endCombatSwal.fire({
@@ -82,7 +109,6 @@ const MapBase = ({
                       setNpcHP(5);
                       setNpcTime(400);
                     });
-
                   }
                   if (!stopGame) {
                     let newAttackInterval = Math.floor(Math.random() * 2000 + 1000);
@@ -109,7 +135,6 @@ const MapBase = ({
                 setTimeout(() => {
                   modalElement.classList.remove('modal-player-attack');
                   if (hpNpcRef.current <= 0) {
-                    console.log("Player WIN!");
                     stopGame = true;
                     endCombatSwal.fire({
                       title: 'You Win!',
@@ -157,27 +182,41 @@ const MapBase = ({
         }
       });
     }
-  },);
+  }, [npcX, playerX, npcY, playerY]);
+
+  const createMapMatrix = () => {
+    const size = 10;
+    const matrix = Array.from({ length: size }, () => Array(size).fill(0));
+
+    for (let i = 0; i < size; i++) {
+      matrix[i][0] = 1;
+      matrix[i][size - 1] = 1;
+    }
+    for (let j = 0; j < size; j++) {
+      matrix[0][j] = 1;
+      matrix[size - 1][j] = 1;
+    }
+
+    matrix[playerY][playerX] = 2;
+    matrix[npcY][npcX] = 3;
+
+    return matrix;
+  };
+
+  const matrix = createMapMatrix();
 
   const renderTable = () => {
-    const rows = Array.from({ length: 10 }, (_, rowIndex) => rowIndex);
-    const cols = Array.from({ length: 10 }, (_, colIndex) => colIndex);
-
-    return rows.map(rowIndex => (
+    return matrix.map((row, rowIndex) => (
       <tr key={rowIndex}>
-        {cols.map(colIndex => {
+        {row.map((cell, colIndex) => {
           let className = "";
 
-          if (playerX === colIndex && playerY === rowIndex) {
-            className = playerStyle;
-          }
-
-          if (npcX === colIndex && npcY === rowIndex) {
-            className = npcStyle;
-          }
-
-          if (rowIndex === 0 || rowIndex === 9 || colIndex === 0 || colIndex === 9) {
+          if (cell === 1) {
             className = "map-border";
+          } else if (cell === 2) {
+            className = playerStyle;
+          } else if (cell === 3) {
+            className = npcStyle;
           }
 
           return <td key={colIndex} className={className}></td>;
