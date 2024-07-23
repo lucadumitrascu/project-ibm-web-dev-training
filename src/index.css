@@ -522,13 +522,24 @@ td {
   flex-direction: column !important;
   text-shadow: none !important;
 }
-
+.modal-end-combat {
+  text-shadow: none !important;
+}
 .modal-npc-attack {
   background-color: red !important;
 }
 
 .modal-npc-pre-attack {
   background-color: orange !important;
+  transition: background-color 0.25s ease;
+}
+
+.modal-player-attack {
+  background-color: green !important;
+}
+
+.modal-player-pre-attack {
+  background-color: rgb(69, 168, 69) !important;
   transition: background-color 0.25s ease;
 }
 

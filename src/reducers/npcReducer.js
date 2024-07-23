@@ -1,7 +1,7 @@
 const initialState = {
   npcX: 2,
   npcY: 2,
-  hp: 100,
+  hp: 5,
   strength: 1,
   npcStyle: "npc-down",
   time: 400,
@@ -9,6 +9,10 @@ const initialState = {
 
 const npcControllerReducer = (state = initialState, action) => {
   switch (action.type) {
+    case 'SET_NPC_HP':
+      return { ...state, hp: action.payload };
+    case 'GET_DMG_NPC':
+      return { ...state, hp: state.hp - action.payload };
     case 'SET_NPC_TIME':
       return { ...state, time: action.payload };
     case 'SET_NPC_X':
