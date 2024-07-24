@@ -1,6 +1,5 @@
 import { connect } from "react-redux";
 import { useEffect } from "react";
-import '../index.css'
 
 const NpcController = ({ setNpcStyle, npcincreaseX, npcincreaseY, npcdecreaseX, npcdecreaseY, npcX, npcY, time }) => {
 

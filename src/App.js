@@ -5,6 +5,7 @@ import MapBase from "./components/MapBase";
 import PlayerStats from "./components/PlayerStats"
 import NpcStats from "./components/NpcStats"
 import "./App.css";
+import '../src/index.css';
 
 function App() {
   return (

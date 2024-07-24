@@ -1,9 +1,10 @@
 const initialState = {
   playerX: 5,
   playerY: 5,
-  hp: 1242141,
+  hp: 20,
   strength: 1,
-  playerStyle: "player-down"
+  playerStyle: "player-down",
+  playerCardStyle: "combat-card-container"
 };
 
 const playerControllerReducer = (state = initialState, action) => {
@@ -14,12 +15,14 @@ const playerControllerReducer = (state = initialState, action) => {
       return { ...state, hp: action.payload };
     case 'GET_DMG_PLAYER':
       return { ...state, hp: state.hp - action.payload };
+    case 'SET_PLAYER_CARD_STYLE':
+      return { ...state, playerCardStyle: action.payload };
+    case "SET_PLAYER_STYLE":
+      return { ...state, playerStyle: action.payload };
     case 'SET_PLAYER_X':
       return { ...state, playerX: action.payload };
     case 'SET_PLAYER_Y':
       return { ...state, playerY: action.payload };
-    case "SET_PLAYER_STYLE":
-      return { ...state, playerStyle: action.payload };
     case "INCREASEX":
       return { ...state, playerX: state.playerX < 8 ? state.playerX + 1 : state.playerX };
     case "DECREASEX":

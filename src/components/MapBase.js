@@ -1,17 +1,18 @@
 import React, { useEffect, useRef } from "react";
 import { connect } from "react-redux";
-import '../index.css';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
-import CombatCard from "./CombatCard";
-import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import store from '../store/store';
+import { createRoot } from "react-dom/client";
+
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+import CombatCard from "./CombatCard";
 
 const MapBase = ({
   npcStyle, playerStyle, playerX, playerY, npcX, npcY,
   setNpcX, setNpcY, setPlayerX, setPlayerY, setNpcTime,
-  hpPlayer, hpNpc, strPlayer, strNpc, getDmgPlayer, getDmgNpc, setPlayerHP, setNpcHP, increasePlayerStr
+  hpPlayer, hpNpc, strPlayer, strNpc, getDmgPlayer, getDmgNpc, setPlayerHP, setNpcHP, increasePlayerStr, setPlayerCardStyle, setNpcCardStyle
 }) => {
 
   const MySwal = withReactContent(Swal);
@@ -36,7 +37,11 @@ const MapBase = ({
         title: 'Combat!',
         html: `<div class="modal-div">
                <div id="combat-card-player"></div>
-               <div>
+               <div class="div-group-middle-section">
+               <div class="div-combat-zone">
+                  <div class="div-player" id="div-player"> </div>
+                  <div class="div-npc" id="div-npc"> </div>
+               </div>
                <button id="defend-button" class="modal-button-defend">Defend</button>
                <button id="attack-button" class="modal-button-attack">Attack</button>
                </div>
@@ -49,8 +54,8 @@ const MapBase = ({
         allowOutsideClick: false,
         allowEscapeKey: false,
         didOpen: () => {
-          const playerCardContainer = document.getElementById("combat-card-player");
-          const npcCardContainer = document.getElementById("combat-card-npc");
+          let playerCardContainer = document.getElementById("combat-card-player");
+          let npcCardContainer = document.getElementById("combat-card-npc");
 
           if (playerCardContainer && npcCardContainer) {
             const playerCardRoot = createRoot(playerCardContainer);
@@ -68,12 +73,13 @@ const MapBase = ({
             );
           }
 
-          const modalElement = document.querySelector('.swal2-popup');
           let firstEntry = true;
           let defendClicked = false;
           let attackClicked = false;
           let defendButton = document.getElementById('defend-button');
           let attackButton = document.getElementById('attack-button');
+          let divPlayer = document.getElementById('div-player');
+          let divNpc = document.getElementById('div-npc');
           let stopGame = false;
 
           const enterCombatMode = (attackInterval) => {
@@ -82,18 +88,32 @@ const MapBase = ({
 
             const performNPCAttack = () => {
               defendButton.disabled = false;
-              modalElement.classList.add('modal-npc-pre-attack');
+              setNpcCardStyle('combat-card-container combat-card-npc-pre-attack');
 
               setTimeout(() => {
-                modalElement.classList.remove('modal-npc-pre-attack');
-                modalElement.classList.add('modal-npc-attack');
+                setNpcCardStyle('combat-card-container');
+                divNpc.classList.add('div-npc-attack');
 
                 if (!defendClicked) {
-                  getDmgPlayer(strNpc * Math.floor(Math.random() * 5 + 1));
+                  setTimeout(() => {
+                    divPlayer.classList.add('div-player-damage');
+                    getDmgPlayer(strNpc * Math.floor(Math.random() * 5 + 1));
+                  }, 150);
+
+                  setTimeout(() => {
+                    setPlayerCardStyle('combat-card-container combat-card-player-damage');
+                  }, 150);
+                } else {
+                  setTimeout(() => {
+                    divPlayer.classList.add("div-player-defense");
+                  }, 250);
+                  setTimeout(() => {
+                    setPlayerCardStyle('combat-card-container combat-card-player-defense');
+                  }, 150);
                 }
 
                 setTimeout(() => {
-                  modalElement.classList.remove('modal-npc-attack');
+                  setPlayerCardStyle('combat-card-container');
                   if (hpPlayerRef.current <= 0) {
                     stopGame = true;
 
@@ -105,35 +125,55 @@ const MapBase = ({
                         popup: 'modal-end-combat'
                       },
                     }).then(() => {
-                      setPlayerHP(5);
-                      setNpcHP(5);
+                      setPlayerHP(20);
+                      setNpcHP(20);
                       setNpcTime(400);
                     });
                   }
+                  setTimeout(() => {
+                    divNpc.classList.remove('div-npc-attack');
+                    divPlayer.classList.remove('div-player-damage');
+                    divPlayer.classList.remove("div-player-defense");
+                  }, 100);
+
                   if (!stopGame) {
                     let newAttackInterval = Math.floor(Math.random() * 2000 + 1000);
                     setTimeout(performPlayerAttack, newAttackInterval);
                     defendButton.disabled = true;
                     defendClicked = false;
                   }
-                }, 250);
+                }, 500);
               }, 250);
             };
 
             const performPlayerAttack = () => {
               attackButton.disabled = false;
-              modalElement.classList.add('modal-player-pre-attack');
+              setPlayerCardStyle('combat-card-container combat-card-player-pre-attack');
 
               setTimeout(() => {
-                modalElement.classList.remove('modal-player-pre-attack');
-                modalElement.classList.add('modal-player-attack');
+                setPlayerCardStyle('combat-card-container');
+                divPlayer.classList.add('div-player-attack');
 
-                if (attackClicked) {
-                  getDmgNpc(strPlayer * Math.floor(Math.random() * 5 + 1));
+                if (!attackClicked) {
+                  setTimeout(() => {
+                    divNpc.classList.add('div-npc-defense');
+                  }, 250);
+
+                  setTimeout(() => {
+                    setNpcCardStyle('combat-card-container combat-card-npc-defense');
+                  }, 150);
+                } else {
+                  setTimeout(() => {
+                    divNpc.classList.add("div-npc-damage");
+                    getDmgNpc(strPlayer * Math.floor(Math.random() * 5 + 1));
+                  }, 150);
+                  setTimeout(() => {
+                    setNpcCardStyle('combat-card-container combat-card-npc-damage');
+                  }, 150);
                 }
 
                 setTimeout(() => {
-                  modalElement.classList.remove('modal-player-attack');
+                  setNpcCardStyle('combat-card-container');
                   if (hpNpcRef.current <= 0) {
                     stopGame = true;
                     endCombatSwal.fire({
@@ -145,12 +185,18 @@ const MapBase = ({
                         popup: 'modal-end-combat'
                       },
                     }).then(() => {
-                      setPlayerHP(5);
-                      setNpcHP(5);
+                      setPlayerHP(20);
+                      setNpcHP(20);
                       increasePlayerStr();
                       setNpcTime(400);
                     });
                   }
+
+                  setTimeout(() => {
+                    divPlayer.classList.remove('div-player-attack');
+                    divNpc.classList.remove('div-npc-damage');
+                    divNpc.classList.remove('div-npc-defense');
+                  }, 100);
 
                   if (!stopGame) {
                     let newAttackInterval = Math.floor(Math.random() * 2000 + 1000);
@@ -158,7 +204,7 @@ const MapBase = ({
                     attackButton.disabled = true;
                     attackClicked = false;
                   }
-                }, 250);
+                }, 500);
               }, 250);
             };
 
@@ -169,6 +215,7 @@ const MapBase = ({
               }, attackInterval);
             }
           };
+
 
           enterCombatMode(2000);
 
@@ -182,17 +229,17 @@ const MapBase = ({
         }
       });
     }
-  }, [npcX, playerX, npcY, playerY]);
+  },);
 
   const createMapMatrix = () => {
     const size = 10;
     const matrix = Array.from({ length: size }, () => Array(size).fill(0));
 
-    for (let i = 0; i < size; i++) {
+    for (let i = 0; i < size; i++) { // First and last column
       matrix[i][0] = 1;
       matrix[i][size - 1] = 1;
     }
-    for (let j = 0; j < size; j++) {
+    for (let j = 0; j < size; j++) { // First and last row
       matrix[0][j] = 1;
       matrix[size - 1][j] = 1;
     }
@@ -260,6 +307,8 @@ const mapDispatchToProps = (dispatch) => ({
   setPlayerHP: (hp) => dispatch({ type: "SET_PLAYER_HP", payload: hp }),
   setNpcHP: (hp) => dispatch({ type: "SET_NPC_HP", payload: hp }),
   increasePlayerStr: () => dispatch({ type: "INCREASE_PLAYER_STR" }),
+  setNpcCardStyle: (style) => dispatch({ type: "SET_NPC_CARD_STYLE", payload: style }),
+  setPlayerCardStyle: (style) => dispatch({ type: "SET_PLAYER_CARD_STYLE", payload: style }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapBase);

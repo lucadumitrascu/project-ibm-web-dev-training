@@ -1,16 +1,14 @@
 import React from "react";
-import '../index.css';
 import { connect } from "react-redux";
 import playerCardImage from '../assets/playerStripes/playerDown.png';
 import npcCardImage from '../assets/npcStripes/npcDown.png'
 
-const CombatCard = ({ isPlayer, hpPlayer, hpNpc, strPlayer, strNpc }) => {
+const CombatCard = ({ isPlayer, hpPlayer, hpNpc, strPlayer, strNpc, playerCardStyle, npcCardStyle }) => {
 
     const generateCard = () => {
-
         if (isPlayer) {
             return (
-                <div className="combat-card-container">
+                <div className={playerCardStyle}>
                     <img src={playerCardImage} alt="combat character" />
 
                     <div className="group-divs-hp-player">
@@ -34,7 +32,7 @@ const CombatCard = ({ isPlayer, hpPlayer, hpNpc, strPlayer, strNpc }) => {
             );
         } else {
             return (
-                <div className="combat-card-container">
+                <div className={npcCardStyle}>
                     <img src={npcCardImage} alt="combat character" />
 
                     <div className="group-divs-hp-npc">
@@ -70,6 +68,8 @@ const mapStateToProps = (state) => ({
     strPlayer: state.player.strength,
     hpNpc: state.npc.hp,
     strNpc: state.npc.strength,
+    npcCardStyle: state.npc.npcCardStyle,
+    playerCardStyle: state.player.playerCardStyle,
 });
 
 

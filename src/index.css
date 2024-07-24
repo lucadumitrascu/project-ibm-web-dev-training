@@ -19,6 +19,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
+
+
 /* PLAYER STATS */
 .div-stats-player-panel {
   width: max-content;
@@ -80,6 +82,7 @@ code {
   justify-content: center;
   align-items: center;
 }
+
 
 
 /* NPC STATS */
@@ -145,6 +148,7 @@ code {
 }
 
 
+
 /* MAP */
 .main-div-map {
   display: flex;
@@ -178,6 +182,7 @@ td {
   background-repeat: no-repeat;
   background-position: center;
 }
+
 
 
 /* PLAYER MOVEMENT */
@@ -216,6 +221,7 @@ td {
   cursor: pointer;
   opacity: 0.7;
 }
+
 
 
 /* PLAYER ANIMATIONS */
@@ -365,6 +371,7 @@ td {
 }
 
 
+
 /* NPC ANIMATIONS */
 @keyframes moveNpcUp {
   0% {
@@ -512,35 +519,27 @@ td {
 }
 
 
+
 /* COMBAT */
 .modal {
+  background-image: url(assets/combatBackground.jpg);
+  color: white;
+  border-radius: 30px;
   width: 80vw !important;
   height: 90vh !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   flex-direction: column !important;
-  text-shadow: none !important;
+  text-shadow:
+    1px 1px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000;
 }
+
 .modal-end-combat {
   text-shadow: none !important;
-}
-.modal-npc-attack {
-  background-color: red !important;
-}
-
-.modal-npc-pre-attack {
-  background-color: orange !important;
-  transition: background-color 0.25s ease;
-}
-
-.modal-player-attack {
-  background-color: green !important;
-}
-
-.modal-player-pre-attack {
-  background-color: rgb(69, 168, 69) !important;
-  transition: background-color 0.25s ease;
 }
 
 .modal button:hover {
@@ -549,33 +548,82 @@ td {
 }
 
 .modal button {
-  width: 10vw;
-  height: 5vh;
-  border: 0.25px solid grey;
-  border-radius: 10px;
-  color: white;
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 10px;
+  font-size: 16px;
   font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
 }
 
 .modal-button-attack {
-  background-color: rgb(237, 138, 33) !important;
+  background-color: #ff4c4c;
+  border: 2px solid #b30000;
+  color: white;
+}
+
+.modal-button-attack:hover {
+  background-color: #ff1a1a;
+  transform: scale(1.1);
 }
 
 .modal-button-defend {
-  background-color: rgb(106, 92, 255) !important;
+  background-color: #4c6aff;
+  border: 2px solid #0033cc;
+  color: white;
+
+}
+
+.modal-button-defend:hover {
+  background-color: #1a53ff;
+  transform: scale(1.1);
+}
+
+.modal button:active {
+  transform: scale(0.9);
 }
 
 .combat-card-container {
-  border: 2px solid #000;
-  border-radius: 8px;
+  border: 2px solid grey;
   padding: 10px;
-  background-color: #f4f4f4;
+  background-color: #a6a4a4;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 13vw;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+.combat-card-player-pre-attack {
+  background-color: rgb(69, 168, 69);
+  transition: background-color 0.25s ease;
+}
+
+.combat-card-npc-damage {
+  background-color: rgb(168, 69, 69);
+  transition: background-color 0.25s ease;
+}
+
+.combat-card-player-defense {
+  background-color: #4c6aff;
+  transition: background-color 0.25s ease;
+}
+
+.combat-card-npc-defense {
+  background-color: #4c6aff;
+  transition: background-color 0.25s ease;
+}
+
+.combat-card-npc-pre-attack,
+.combat-card-player-damage {
+  background-color: rgb(168, 69, 69);
+  transition: background-color 0.25s ease;
+}
+
 
 .combat-card-container img {
   width: 50px;
@@ -593,7 +641,8 @@ td {
 .p-hp-npc {
   font-size: 14px;
   font-weight: bold;
-  color: #333;
+  padding: 5px;
+  color: white;
   margin: 0;
 }
 
@@ -628,7 +677,7 @@ td {
 .p-str-npc {
   font-size: 14px;
   font-weight: bold;
-  color: #333;
+  color: white;
   margin: 0;
 }
 
@@ -659,4 +708,118 @@ td {
   grid-template-columns: 1fr 1fr 1fr;
   justify-items: center;
   align-items: center;
+}
+
+.div-combat-zone {
+  display: flex;
+  justify-content: center;
+  margin: 30px;
+  background-color: #b69494;
+  border: 2px solid grey;
+  padding: 10px;
+  width: 15vw;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.div-player {
+  background-image: url("assets/combatStripes/combat-player1.png");
+  width: 75px;
+  height: 80px;
+  margin: 0;
+  padding: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.div-npc {
+  background-image: url("assets/combatStripes/combat-npc1.png");
+  width: 75px;
+  height: 80px;
+  margin: 0;
+  padding: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.div-player-defense {
+  background-image: url(assets/combatStripes/combat-player-defend.png) !important;
+}
+
+.div-npc-defense {
+  background-image: url(assets/combatStripes/combat-npc-defend.png) !important;
+}
+
+.div-player-attack {
+  animation: playerAttack 0.50s forwards linear;
+}
+
+.div-npc-attack {
+  animation: npcAttack 0.50s forwards linear;
+}
+
+.div-player-damage {
+  background-image: url(assets/combatStripes/combat-player1.png);
+  opacity: 0.5;
+}
+
+.div-npc-damage {
+  background-image: url(assets/combatStripes/combat-npc1.png);
+  opacity: 0.5;
+}
+
+
+@keyframes playerAttack {
+  0% {
+    transform: translateX(0);
+    background-image: url(assets/combatStripes/combat-player1.png);
+  }
+
+  25% {
+    transform: translateX(25%);
+    background-image: url(assets/combatStripes/combat-player1.png);
+  }
+
+  50% {
+    transform: translateX(50%);
+    background-image: url(assets/combatStripes/combat-player3.png);
+  }
+
+  75% {
+    transform: translateX(65%);
+    background-image: url(assets/combatStripes/combat-player2.png);
+  }
+
+  100% {
+    transform: translateX(75%);
+    background-image: url(assets/combatStripes/combat-player2.png);
+  }
+}
+
+@keyframes npcAttack {
+  0% {
+    transform: translateX(0);
+    background-image: url(assets/combatStripes/combat-npc1.png);
+  }
+
+  25% {
+    transform: translateX(-25%);
+    background-image: url(assets/combatStripes/combat-npc1.png);
+  }
+
+  50% {
+    transform: translateX(-50%);
+    background-image: url(assets/combatStripes/combat-npc3.png);
+  }
+
+  75% {
+    transform: translateX(-65%);
+    background-image: url(assets/combatStripes/combat-npc2.png);
+  }
+
+  100% {
+    transform: translateX(-75%);
+    background-image: url(assets/combatStripes/combat-npc2.png);
+  }
 }
