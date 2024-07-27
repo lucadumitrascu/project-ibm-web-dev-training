@@ -7,6 +7,10 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import CombatCard from "./CombatCard";
 
+import ghostImg from "../assets/ghost.png";
+import playerImg from "../assets/playerStripes/playerRight.png"
+
+
 const MapBase = ({
   npcs, playerStyle, playerX, playerY, removeNpc, setPlayerX, setPlayerY, setNpcX, setNpcY,
   setNpcTime, hpPlayer, strPlayer, getDmgPlayer, getDmgNpc, setPlayerHP, setNpcHP,
@@ -14,6 +18,8 @@ const MapBase = ({
 }) => {
   const MySwal = withReactContent(Swal);
   const endCombatSwal = withReactContent(Swal);
+  const introSwal = withReactContent(Swal);
+
   const hpPlayerRef = useRef(hpPlayer);
   const hpNpcRefs = useRef({});
 
@@ -272,6 +278,8 @@ const MapBase = ({
     }
   };
 
+  const [introEnded, setIntroEnded] = useState(false);
+
 
   useEffect(() => {
     if (mapIndex === 0) { // MAP 1
@@ -286,6 +294,58 @@ const MapBase = ({
       }
       else if (npcs.length > 0 && playerX === 8 && playerY === 0) {
         setPlayerY(1);
+      }
+
+      if (!introEnded && ((playerX === 6 && playerY === 2)
+        || (playerX === 7 && playerY === 1) || (playerX === 7 && playerY === 3))) {
+
+        let step = 0;
+        const dialog = [
+          { text: 'Ghost: "Bohohoho!"', img: ghostImg },
+          { text: 'Player: "A GHOST???"', img: playerImg },
+          { text: 'Ghost: "Yes, I am the spirit of someone who once tried to navigate this place."', img: ghostImg },
+          { text: 'Player: "What happened to you?"', img: playerImg },
+          { text: 'Ghost: "I was here before you. I didn’t make it. The enemies here are ruthless."', img: ghostImg },
+          { text: 'Player: "Is there any way to escape?"', img: playerImg },
+          { text: 'Ghost: "Only those who are brave and vigilant can survive."', img: ghostImg },
+          { text: 'Player: "I must continue, I have no choice."', img: playerImg },
+          { text: 'Ghost: "Wait! Oh no, I can feel it... An enemy is here! We can’t talk anymore, you must fight! Good luck!"', img: ghostImg }
+        ];
+
+        function showNextDialog() {
+          if (step < dialog.length) {
+            Swal.fire({
+              html: `
+          <div id="div-modal-intro" class="div-modal-intro">
+              <img id="modalImage" src="" alt="Character Image" style="width: 100px; height: 100px;" />
+              <p id="modalText"></p>
+              
+          </div>
+          <button id="nextButton">Next</button>
+        `,
+              showConfirmButton: false,
+              customClass: {
+                popup: 'modal-intro'
+              },
+              didOpen: () => {
+                document.getElementById('modalImage').src = dialog[step].img;
+                document.getElementById('modalText').textContent = dialog[step].text;
+                document.getElementById('nextButton').textContent = step < dialog.length - 1 ? 'Next' : 'Continue';
+
+                document.getElementById('nextButton').addEventListener('click', function () {
+                  step++;
+                  Swal.close();
+                  if (step < dialog.length) {
+                    showNextDialog();
+                  } else {
+                    setIntroEnded(true);
+                  }
+                });
+              }
+            });
+          }
+        }
+        showNextDialog();
       } // ------------------------------------------------------
     } else if (mapIndex === 1) { // MAP 2
       if (npcs.length === 0 && playerX === 0 && playerY === 1) {
@@ -365,7 +425,7 @@ const MapBase = ({
   const [doorAnimClose, setDoorAnimClose] = useState(true);
 
   useEffect(() => {
-    if (npcs.length === 0) {
+    if (npcs.length === 0 && introEnded) {
       if (doorAnimOpen) {
         setDoorAnimOpen(false);
         setDoorAnimClose(true);
@@ -382,7 +442,10 @@ const MapBase = ({
         setDoorStyle("door-close");
       }
     }
-  }, [npcs.length, mapIndex]);
+    if (!introEnded) {
+      setDoorStyle("door-close");
+    }
+  }, [npcs.length, mapIndex, introEnded]);
 
   const renderTable = () => {
     return maps[mapIndex].matrix.map((row, rowIndex) => (
@@ -398,6 +461,9 @@ const MapBase = ({
           }
           else if (cell === 3) {
             className = "door-close";
+          }
+          else if (cell === 4) {
+            className = "ghost-cell";
           }
           else if (colIndex === playerX && rowIndex === playerY) {
             className = playerStyle;

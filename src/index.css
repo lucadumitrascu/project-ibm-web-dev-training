@@ -248,6 +248,59 @@ td {
   background-size: cover;
 }
 
+
+.modal-intro {
+  background-image: url(assets/combatBackground.jpg);
+  background-size: contain;
+  color: white;
+  border-radius: 5px;
+  width: 50vw !important;
+  height: fit-content !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-direction: column !important;
+  font-size: 20px;
+  text-shadow:
+    1px 1px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000;
+}
+
+.div-modal-intro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+#nextButton {
+  background-image: url(assets/buttonsBackground.jpeg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 1px solid white;
+  font-weight: bold;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#nextButton:hover {
+  opacity: 0.7;
+}
+
+
+.ghost-cell {
+  background-image: url(assets/ghost.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+
 /* PLAYER MOVEMENT */
 .main-div-player-controller {
   display: flex;

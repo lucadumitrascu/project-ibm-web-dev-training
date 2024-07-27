@@ -1,7 +1,5 @@
 const initialState = {
-  npcs: [
-    { id: 1, npcX: 3, npcY: 3, hp: 1, strength: 1, npcStyle: "npc-down" },
-  ],
+  npcs: [],
   time: 400,
   strength: 1,
   npcCardStyle: "combat-card-container",
