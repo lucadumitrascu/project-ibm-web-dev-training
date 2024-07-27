@@ -8,7 +8,7 @@ import withReactContent from 'sweetalert2-react-content';
 import CombatCard from "./CombatCard";
 
 import ghostImg from "../assets/ghost.png";
-import playerImg from "../assets/playerStripes/playerRight.png"
+import playerImg from "../assets/player.png"
 
 
 const MapBase = ({
@@ -142,7 +142,7 @@ const MapBase = ({
 
                       endCombatSwal.fire({
                         title: 'You died!',
-                        confirmButtonText: 'Continue',
+                        confirmButtonText: 'Restart game',
                         showConfirmButton: true,
                         customClass: {
                           popup: 'modal-end-combat'
@@ -155,7 +155,7 @@ const MapBase = ({
                         resetPlayerStrength();
                         setNpcStrength(1);
                         removeAllNpcs();
-                        handleAddNpcs();
+                        setIntroEnded(false);
                         changeMap(0);
                         currentLevel.current = 0;
                       });
@@ -263,12 +263,15 @@ const MapBase = ({
 
 
 
-  const handleAddNpcs = () => {
-    let numberOfNpcs = Math.floor(Math.random() * 5 + 1);
-    for (let i = 0; i < 1; i++) {
+  const handleAddNpcs = (numberOfNpcs) => {
+    if (numberOfNpcs !== 1) {
+      numberOfNpcs = Math.floor(Math.random() * 3 + 1);
+    }
+
+    for (let i = 0; i < numberOfNpcs; i++) {
       const newNpc = {
         id: i,
-        npcX: i,
+        npcX: i + 2,
         npcY: 5,
         hp: 1,
         strength: 1,
@@ -286,7 +289,7 @@ const MapBase = ({
       if (npcs.length === 0 && playerX === 8 && playerY === 0) {
         if (currentLevel.current === 0) {
           currentLevel.current++;
-          handleAddNpcs();
+          handleAddNpcs(2);
           setNpcStrength(2);
         }
         setPlayerY(8);
@@ -339,6 +342,7 @@ const MapBase = ({
                     showNextDialog();
                   } else {
                     setIntroEnded(true);
+                    handleAddNpcs(1);
                   }
                 });
               }
@@ -351,7 +355,7 @@ const MapBase = ({
       if (npcs.length === 0 && playerX === 0 && playerY === 1) {
         if (currentLevel.current === 1) {
           currentLevel.current++;
-          handleAddNpcs();
+          handleAddNpcs(2);
           setNpcStrength(3);
         }
         setPlayerX(8);
@@ -371,7 +375,7 @@ const MapBase = ({
       if (npcs.length === 0 && playerX === 1 && playerY === 9) {
         if (currentLevel.current === 2) {
           currentLevel.current++;
-          handleAddNpcs();
+          handleAddNpcs(2);
           setNpcStrength(4);
         }
         setPlayerY(1);
@@ -392,7 +396,7 @@ const MapBase = ({
       if (npcs.length === 0 && playerX === 9 && playerY === 8) {
         if (currentLevel.current === 3) {
           currentLevel.current++;
-          handleAddNpcs();
+          handleAddNpcs(2);
           setNpcStrength(5);
         }
         setPlayerX(1);
@@ -433,7 +437,7 @@ const MapBase = ({
       } else {
         setDoorStyle("door-open");
       }
-    } else if (npcs.length > 0) {
+    } else if (npcs.length > 0 && mapIndex !== 0) {
       if (doorAnimClose) {
         setDoorAnimOpen(true);
         setDoorAnimClose(false);
