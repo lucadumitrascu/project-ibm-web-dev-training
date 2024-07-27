@@ -1,16 +1,30 @@
 const initialState = {
   npcs: [
     { id: 1, npcX: 3, npcY: 3, hp: 1, strength: 1, npcStyle: "npc-down" },
-    { id: 2, npcX: 3, npcY: 3, hp: 1, strength: 1, npcStyle: "npc-down" },
-    { id: 3, npcX: 3, npcY: 3, hp: 1, strength: 1, npcStyle: "npc-down" },
-    { id: 4, npcX: 3, npcY: 3, hp: 1, strength: 1, npcStyle: "npc-down" },
   ],
   time: 400,
+  strength: 1,
   npcCardStyle: "combat-card-container",
 };
 
 const npcControllerReducer = (state = initialState, action) => {
   switch (action.type) {
+    case 'SET_ALL_NPC_STRENGTH':
+      return {
+        ...state,
+        strength: action.payload.str,
+        npcs: state.npcs.map(npc => ({
+          ...npc,
+          strength: action.payload.str
+        }))
+      };
+    case 'ADD_NPC':
+      return {
+        ...state,
+        npcs: [...state.npcs, action.payload.npc]
+      };
+    case 'SET_NPC_STRENGTH':
+      return { ...state, time: action.payload.strength };
     case 'SET_NPC_X':
       return {
         ...state,
@@ -80,6 +94,11 @@ const npcControllerReducer = (state = initialState, action) => {
       return {
         ...state,
         npcs: state.npcs.filter(npc => npc.id !== action.payload.id)
+      };
+    case 'REMOVE_ALL_NPCS':
+      return {
+        ...state,
+        npcs: []
       };
     case 'SET_NPC_CARD_STYLE':
       return {

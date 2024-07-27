@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
-const PlayerController = ({ setPlayerStyle, increaseX, increaseY, decreaseX, decreaseY, playerX, playerY }) => {
+const PlayerController = ({ setPlayerStyle, increaseX, increaseY, decreaseX, decreaseY, playerX, playerY, maps, mapIndex }) => {
 
   useEffect(() => {
     const handleKeyPress = (event) => {
@@ -32,50 +32,58 @@ const PlayerController = ({ setPlayerStyle, increaseX, increaseY, decreaseX, dec
 
   let clicked = false;
   const handleUpClick = () => {
-    if (!clicked && playerY > 1) {
-      clicked = true;
-      setPlayerStyle("player-up-anim");
-      setTimeout(() => {
-        decreaseY();
-        setPlayerStyle("player-up");
-        clicked = false;
-      }, 400);
+    if (playerY > 0) {
+      if (!clicked && (maps[mapIndex].matrix[playerY - 1][playerX] === 0 || maps[mapIndex].matrix[playerY - 1][playerX] === 2)) {
+        clicked = true;
+        setPlayerStyle("player-up-anim");
+        setTimeout(() => {
+          decreaseY();
+          setPlayerStyle("player-up");
+          clicked = false;
+        }, 400);
+      }
     }
   };
 
   const handleDownClick = () => {
-    if (!clicked && playerY < 8) {
-      clicked = true;
-      setPlayerStyle("player-down-anim");
-      setTimeout(() => {
-        increaseY();
-        setPlayerStyle("player-down");
-        clicked = false;
-      }, 400);
+    if (playerY < 9) {
+      if (!clicked && (maps[mapIndex].matrix[playerY + 1][playerX] === 0 || maps[mapIndex].matrix[playerY+1][playerX] === 2)) {
+        clicked = true;
+        setPlayerStyle("player-down-anim");
+        setTimeout(() => {
+          increaseY();
+          setPlayerStyle("player-down");
+          clicked = false;
+        }, 400);
+      }
     }
   };
 
   const handleLeftClick = () => {
-    if (!clicked && playerX > 1) {
-      clicked = true;
-      setPlayerStyle("player-left-anim");
-      setTimeout(() => {
-        decreaseX();
-        setPlayerStyle("player-left");
-        clicked = false;
-      }, 400);
+    if (playerX > 0) {
+      if (!clicked && (maps[mapIndex].matrix[playerY][playerX - 1] === 0 || maps[mapIndex].matrix[playerY][playerX-1] === 2)) {
+        clicked = true;
+        setPlayerStyle("player-left-anim");
+        setTimeout(() => {
+          decreaseX();
+          setPlayerStyle("player-left");
+          clicked = false;
+        }, 400);
+      }
     }
   };
 
   const handleRightClick = () => {
-    if (!clicked && playerX < 8) {
-      clicked = true;
-      setPlayerStyle("player-right-anim");
-      setTimeout(() => {
-        increaseX();
-        setPlayerStyle("player-right");
-        clicked = false;
-      }, 400);
+    if (playerX < 9) {
+      if (!clicked && (maps[mapIndex].matrix[playerY][playerX + 1] === 0 || maps[mapIndex].matrix[playerY][playerX+1] === 2)) {
+        clicked = true;
+        setPlayerStyle("player-right-anim");
+        setTimeout(() => {
+          increaseX();
+          setPlayerStyle("player-right");
+          clicked = false;
+        }, 400);
+      }
     }
   };
 
@@ -107,6 +115,8 @@ const PlayerController = ({ setPlayerStyle, increaseX, increaseY, decreaseX, dec
 const mapStateToProps = (state) => ({
   playerX: state.player.playerX,
   playerY: state.player.playerY,
+  maps: state.map.maps,
+  mapIndex: state.map.mapIndex
 });
 
 const mapDispatchToProps = (dispatch) => ({

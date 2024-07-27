@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-const PlayerStats = ({ playerX, playerY, hp, strength }) => {
+const PlayerStats = ({ playerX, playerY, hp, strength, mapIndex }) => {
 
   return (
     <div>
@@ -22,6 +22,10 @@ const PlayerStats = ({ playerX, playerY, hp, strength }) => {
             <p className="p-stats-player-position-y"> Y: {playerY}</p>
           </div>
         </div>
+        <div className="div-stats-player-level">
+          <p className="p-stats-player-level"> LEVEL </p>
+          <p className="p-stats-player-level-value">{mapIndex+1}</p>
+        </div>
       </div>
     </div>
   );
@@ -31,7 +35,8 @@ const mapStateToProps = (state) => ({
   playerX: state.player.playerX,
   playerY: state.player.playerY,
   hp: state.player.hp,
-  strength: state.player.strength
+  strength: state.player.strength,
+  mapIndex: state.map.mapIndex
 });
 
 

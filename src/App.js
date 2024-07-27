@@ -13,7 +13,7 @@ function App() {
       <p className="app-title">Game</p>
       <div className="component-map-stats">
         <div></div>
-        <div></div>
+        <NpcStats/>
         <MapBase />
         <PlayerStats />
         <div></div>

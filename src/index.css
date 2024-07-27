@@ -42,7 +42,8 @@ code {
 
 .div-hp,
 .div-str,
-.div-stats-player-position {
+.div-stats-player-position,
+.div-stats-player-level {
   display: flex;
   justify-content: space-between;
   width: 15vw;
@@ -55,7 +56,9 @@ code {
 .p-stats-player-position,
 .div-stats-player-position-value,
 .p-stats-player-position-x,
-.p-stats-player-position-y {
+.p-stats-player-position-y,
+.p-stats-player-level,
+.p-stats-player-level-value {
   color: rgb(0, 214, 54);
   font-weight: bold;
   font-size: 20px;
@@ -115,11 +118,7 @@ code {
 .p-stats-npc-hp,
 .p-stats-npc-hp-value,
 .p-stats-npc-str,
-.p-stats-npc-str-value,
-.p-stats-npc-position,
-.div-stats-npc-position-value,
-.p-stats-npc-position-x,
-.p-stats-npc-position-y {
+.p-stats-npc-str-value {
   color: rgb(255, 187, 30);
   font-weight: bold;
   font-size: 20px;
@@ -129,22 +128,10 @@ code {
   width: max-content;
 }
 
-.p-stats-npc-position-x,
-.p-stats-npc-position-y {
-  padding: 0px;
-  padding-left: 10px;
-}
-
 .p-stats-npc-str,
 .p-stats-npc-str-value {
   padding-right: 5px;
   padding-left: 5px;
-}
-
-.div-stats-npc-position-value {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 
@@ -156,9 +143,15 @@ code {
   justify-content: center;
 }
 
-table {
+.floor-1 {
   border-collapse: collapse;
-  background-image: url(/src/assets/floor.png);
+  background-image: url(/src/assets/floor1.png);
+  background-position: center;
+}
+
+.floor-2 {
+  border-collapse: collapse;
+  background-image: url(/src/assets/floor2.png);
   background-position: center;
 }
 
@@ -183,7 +176,77 @@ td {
   background-position: center;
 }
 
+@keyframes doorOpen {
+  0% {
+    transform: translateY(0);
+    background-image: url(assets/door1.png);
+  }
 
+  40% {
+    transform: translateY(0%);
+    background-image: url(assets/door2.png);
+  }
+
+  80% {
+    transform: translateY(0%);
+    background-image: url(assets/door3.png);
+  }
+
+  100% {
+    transform: translateY(0%);
+    background-image: url(assets/door4.png);
+  }
+}
+
+@keyframes doorClose {
+  0% {
+    transform: translateY(0);
+    background-image: url(assets/door4.png);
+  }
+
+  40% {
+    transform: translateY(0%);
+    background-image: url(assets/door3.png);
+  }
+
+  80% {
+    transform: translateY(0%);
+    background-image: url(assets/door2.png);
+  }
+
+  100% {
+    transform: translateY(0%);
+    background-image: url(assets/door1.png);
+  }
+}
+
+.door-anim-open {
+  animation: doorOpen 0.8s linear forwards;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.door-anim-close {
+  animation: doorClose 0.9s linear forwards;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.door-close {
+  background-image: url(assets/door1.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.door-open {
+  background-image: url(assets/door4.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
 
 /* PLAYER MOVEMENT */
 .main-div-player-controller {

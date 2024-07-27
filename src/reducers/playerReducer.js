@@ -9,6 +9,8 @@ const initialState = {
 
 const playerControllerReducer = (state = initialState, action) => {
   switch (action.type) {
+    case 'RESET_PLAYER_STRENGTH':
+      return { ...state, strength: 1};
     case 'INCREASE_PLAYER_STR':
       return { ...state, strength: state.strength + 1 };
     case 'SET_PLAYER_HP':
@@ -24,13 +26,13 @@ const playerControllerReducer = (state = initialState, action) => {
     case 'SET_PLAYER_Y':
       return { ...state, playerY: action.payload.y };
     case "INCREASEX":
-      return { ...state, playerX: state.playerX < 8 ? state.playerX + 1 : state.playerX };
+      return { ...state, playerX: state.playerX < 9 ? state.playerX + 1 : state.playerX };
     case "DECREASEX":
-      return { ...state, playerX: state.playerX > 1 ? state.playerX - 1 : state.playerX };
+      return { ...state, playerX: state.playerX > 0 ? state.playerX - 1 : state.playerX };
     case "INCREASEY":
-      return { ...state, playerY: state.playerY < 8 ? state.playerY + 1 : state.playerY };
+      return { ...state, playerY: state.playerY < 9 ? state.playerY + 1 : state.playerY };
     case "DECREASEY":
-      return { ...state, playerY: state.playerY > 1 ? state.playerY - 1 : state.playerY };
+      return { ...state, playerY: state.playerY > 0 ? state.playerY - 1 : state.playerY };
     default:
       return state;
   }
