@@ -47,7 +47,7 @@ const PlayerController = ({ setPlayerStyle, increaseX, increaseY, decreaseX, dec
 
   const handleDownClick = () => {
     if (playerY < 9) {
-      if (!clicked && (maps[mapIndex].matrix[playerY + 1][playerX] === 0 || maps[mapIndex].matrix[playerY+1][playerX] === 2)) {
+      if (!clicked && (maps[mapIndex].matrix[playerY + 1][playerX] === 0 || maps[mapIndex].matrix[playerY + 1][playerX] === 2)) {
         clicked = true;
         setPlayerStyle("player-down-anim");
         setTimeout(() => {
@@ -61,7 +61,9 @@ const PlayerController = ({ setPlayerStyle, increaseX, increaseY, decreaseX, dec
 
   const handleLeftClick = () => {
     if (playerX > 0) {
-      if (!clicked && (maps[mapIndex].matrix[playerY][playerX - 1] === 0 || maps[mapIndex].matrix[playerY][playerX-1] === 2)) {
+      if (!clicked && (maps[mapIndex].matrix[playerY][playerX - 1] === 0 || maps[mapIndex].matrix[playerY][playerX - 1] === 2
+        || maps[mapIndex].matrix[playerY][playerX - 1] === 7
+      )) {
         clicked = true;
         setPlayerStyle("player-left-anim");
         setTimeout(() => {
@@ -75,7 +77,9 @@ const PlayerController = ({ setPlayerStyle, increaseX, increaseY, decreaseX, dec
 
   const handleRightClick = () => {
     if (playerX < 9) {
-      if (!clicked && (maps[mapIndex].matrix[playerY][playerX + 1] === 0 || maps[mapIndex].matrix[playerY][playerX+1] === 2)) {
+      if (!clicked && (maps[mapIndex].matrix[playerY][playerX + 1] === 0 || maps[mapIndex].matrix[playerY][playerX + 1] === 2
+        || maps[mapIndex].matrix[playerY][playerX + 1] === 7
+      )) {
         clicked = true;
         setPlayerStyle("player-right-anim");
         setTimeout(() => {

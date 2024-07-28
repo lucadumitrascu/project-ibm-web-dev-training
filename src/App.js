@@ -6,6 +6,7 @@ import PlayerStats from "./components/PlayerStats"
 import NpcStats from "./components/NpcStats"
 import "./App.css";
 import '../src/index.css';
+import QuestsSidebar from "./components/QuestSidebar";
 
 function App() {
   return (
@@ -13,7 +14,10 @@ function App() {
       <p className="app-title">Game</p>
       <div className="component-map-stats">
         <div></div>
-        <NpcStats/>
+        <div className="div-left-side">
+          <NpcStats />
+          <QuestsSidebar />
+        </div>
         <MapBase />
         <PlayerStats />
         <div></div>

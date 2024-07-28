@@ -20,11 +20,9 @@ code {
 }
 
 
-
-/* PLAYER STATS */
-.div-stats-player-panel {
+/* COMMON STYLES */
+.panel {
   width: max-content;
-  margin-left: 2vw;
   padding: 10px;
   background-image: url(/src/assets//statsPanel.jpeg);
   background-position: center;
@@ -34,19 +32,39 @@ code {
   box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.5);
 }
 
-.h1-stats-player-title {
+.panel-title {
   color: rgb(196, 196, 196);
   margin: 0;
   padding: 5px;
 }
 
-.div-hp,
-.div-str,
-.div-stats-player-position,
-.div-stats-player-level {
+.stat {
   display: flex;
   justify-content: space-between;
   width: 15vw;
+}
+
+.stat-value {
+  font-weight: bold;
+  font-size: 20px;
+  margin: 0;
+  padding: 5px;
+  align-self: center;
+  width: max-content;
+}
+
+.stat-value-padding {
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+/* PLAYER STATS */
+.div-stats-player-panel {
+  margin-left: 2vw;
+}
+
+.h1-stats-player-title {
+  color: rgb(196, 196, 196);
 }
 
 .p-stats-player-hp,
@@ -60,12 +78,6 @@ code {
 .p-stats-player-level,
 .p-stats-player-level-value {
   color: rgb(0, 214, 54);
-  font-weight: bold;
-  font-size: 20px;
-  margin: 0;
-  padding: 5px;
-  align-self: center;
-  width: max-content;
 }
 
 .p-stats-player-position-x,
@@ -74,45 +86,15 @@ code {
   padding-left: 10px;
 }
 
-.p-stats-player-str,
-.p-stats-player-str-value {
-  padding-right: 5px;
-  padding-left: 5px;
-}
-
 .div-stats-player-position-value {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-
-
 /* NPC STATS */
-.div-stats-npc-panel {
-  width: max-content;
-  margin-right: 2vw;
-  padding: 10px;
-  background-image: url(/src/assets//statsPanel.jpeg);
-  background-position: center;
-  background-size: contain;
-  border: 5px solid rgb(77, 105, 77);
-  border-radius: 20px;
-  box-shadow: -10px 10px 15px rgba(0, 0, 0, 0.5);
-}
-
 .h1-stats-npc-title {
   color: rgb(196, 196, 196);
-  margin: 0;
-  padding: 5px;
-}
-
-.div-hp,
-.div-str,
-.div-stats-npc-position {
-  display: flex;
-  justify-content: space-between;
-  width: 15vw;
 }
 
 .p-stats-npc-hp,
@@ -120,21 +102,37 @@ code {
 .p-stats-npc-str,
 .p-stats-npc-str-value {
   color: rgb(255, 187, 30);
-  font-weight: bold;
-  font-size: 20px;
-  margin: 0;
-  padding: 5px;
-  align-self: center;
-  width: max-content;
 }
 
-.p-stats-npc-str,
-.p-stats-npc-str-value {
+/* QUESTS */
+.div-left-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 2vw;
+}
+
+.div-stats-quest-panel {
+  margin-top: 10px;
+}
+
+.div-quest {
+  display: flex;
+  justify-content: space-between;
+}
+
+.p-quest-title,
+.p-quest-progress {
+  color: rgb(144, 88, 255);
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.p-quest-progress {
   padding-right: 5px;
   padding-left: 5px;
 }
-
-
 
 /* MAP */
 .main-div-map {
@@ -938,4 +936,27 @@ td {
     transform: translateX(-75%);
     background-image: url(assets/combatStripes/combat-npc2.png);
   }
+}
+
+/* QUESTS */
+
+.chest-open {
+  background-image: url("assets/chest2.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.chest-close {
+  background-image: url("assets/chest1.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.key {
+  background-image: url("assets/key.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }

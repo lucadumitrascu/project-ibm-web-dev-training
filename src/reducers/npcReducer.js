@@ -1,28 +1,20 @@
 const initialState = {
   npcs: [],
   time: 400,
+  hp: 5,
   strength: 1,
   npcCardStyle: "combat-card-container",
 };
 
 const npcControllerReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'SET_ALL_NPC_STRENGTH':
-      return {
-        ...state,
-        strength: action.payload.str,
-        npcs: state.npcs.map(npc => ({
-          ...npc,
-          strength: action.payload.str
-        }))
-      };
     case 'ADD_NPC':
       return {
         ...state,
         npcs: [...state.npcs, action.payload.npc]
       };
-    case 'SET_NPC_STRENGTH':
-      return { ...state, time: action.payload.strength };
+    case 'SET_NPC_STR':
+      return { ...state, strength: action.payload.str };
     case 'SET_NPC_X':
       return {
         ...state,
@@ -38,12 +30,7 @@ const npcControllerReducer = (state = initialState, action) => {
         )
       };
     case 'SET_NPC_HP':
-      return {
-        ...state,
-        npcs: state.npcs.map(npc =>
-          npc.id === action.payload.id ? { ...npc, hp: action.payload.hp } : npc
-        )
-      };
+      return { ...state, hp: action.payload.hp };
     case 'GET_DMG_NPC':
       return {
         ...state,

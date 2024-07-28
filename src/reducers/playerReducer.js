@@ -1,7 +1,7 @@
 const initialState = {
   playerX: 5,
   playerY: 5,
-  hp: 1,
+  hp: 5,
   strength: 1,
   playerStyle: "player-down",
   playerCardStyle: "combat-card-container",
@@ -10,9 +10,11 @@ const initialState = {
 const playerControllerReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'RESET_PLAYER_STRENGTH':
-      return { ...state, strength: 1};
+      return { ...state, strength: 1 };
     case 'INCREASE_PLAYER_STR':
-      return { ...state, strength: state.strength + 1 };
+      return { ...state, strength: state.strength + action.payload.value };
+    case 'INCREASE_PLAYER_HP':
+      return { ...state, hp: state.hp + action.payload.hp };
     case 'SET_PLAYER_HP':
       return { ...state, hp: action.payload.hp };
     case 'GET_DMG_PLAYER':

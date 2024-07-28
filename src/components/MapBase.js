@@ -12,29 +12,31 @@ import playerImg from "../assets/player.png"
 
 
 const MapBase = ({
-  npcs, playerStyle, playerX, playerY, removeNpc, setPlayerX, setPlayerY, setNpcX, setNpcY,
-  setNpcTime, hpPlayer, strPlayer, getDmgPlayer, getDmgNpc, setPlayerHP, setNpcHP,
-  increasePlayerStr, setPlayerCardStyle, setNpcCardStyle, maps, mapIndex, changeMap, addNpc, setNpcStrength, removeAllNpcs, resetPlayerStrength,
+  // Props for NPCs
+  npcs, addNpc, removeNpc, setNpcX, setNpcY, setNpcTime, setNpcHP, setNpcCardStyle, setNpcStr, removeAllNpcs,
+
+  // Props for Player
+  playerStyle, playerX, playerY, setPlayerX, setPlayerY, hpPlayer, strPlayer, setPlayerHP, getDmgPlayer, getDmgNpc,
+  increasePlayerStr, increasePlayerHP, setPlayerCardStyle, resetPlayerStrength,
+
+  // Props for Quests
+  quests, setQuestProgress, setQuestDone, increaseQuestProgress, resetAllQuests,
+
+  // Props for Maps
+  maps, mapIndex, changeMap
 }) => {
+
+
+  /* ---------------------------------------------------------------------------------------- */
+
+  /* COMBAT MODAL */
+
+  /* ---------------------------------------------------------------------------------------- */
+
   const MySwal = withReactContent(Swal);
   const endCombatSwal = withReactContent(Swal);
-  const introSwal = withReactContent(Swal);
-
   const hpPlayerRef = useRef(hpPlayer);
   const hpNpcRefs = useRef({});
-
-
-  const currentLevel = useRef(0);
-
-  const [tableStyle, setTableStyle] = useState("map-table");
-
-  useEffect(() => {
-    if (mapIndex === 0) {
-      setTableStyle("floor-1");
-    } else {
-      setTableStyle("floor-2");
-    }
-  }, [mapIndex]);
 
   useEffect(() => {
     hpPlayerRef.current = hpPlayer;
@@ -150,12 +152,14 @@ const MapBase = ({
                       }).then(() => {
                         setPlayerX(4);
                         setPlayerY(8);
-                        setPlayerHP(20);
+                        setPlayerHP(5);
                         setNpcTime(400);
                         resetPlayerStrength();
-                        setNpcStrength(1);
                         removeAllNpcs();
+                        setNpcStr(1);
+                        setNpcHP(5);
                         setIntroEnded(false);
+                        resetAllQuests();
                         changeMap(0);
                         currentLevel.current = 0;
                       });
@@ -195,7 +199,15 @@ const MapBase = ({
                   } else {
                     setTimeout(() => {
                       divNpc.classList.add("div-npc-damage");
-                      getDmgNpc(npc.id, strPlayer * Math.floor(Math.random() * 5 + 1));
+                      let damageValue = Math.floor(Math.random() * 5 + 1);
+                      getDmgNpc(npc.id, strPlayer * damageValue);
+                      if (damageValue === 5) {
+                        if (!quests[5].done) {
+                          setQuestDone(5, true);
+                          setQuestProgress(5, 1);
+                          increasePlayerHP(5);
+                        }
+                      }
                     }, 400);
                     setTimeout(() => {
                       setNpcCardStyle('combat-card-container combat-card-npc-damage');
@@ -215,10 +227,16 @@ const MapBase = ({
                           popup: 'modal-end-combat'
                         },
                       }).then(() => {
-                        setPlayerHP(20);
                         removeNpc(npc.id);
-                        increasePlayerStr();
+                        increasePlayerStr(1);
                         setNpcTime(400);
+                        if (!quests[6].done) {
+                          increaseQuestProgress(6, 1);
+                          if (quests[6].progress === quests[6].target - 1) {
+                            increasePlayerStr(2);
+                            setQuestDone(6, true);
+                          }
+                        }
                       });
                     }
 
@@ -262,38 +280,58 @@ const MapBase = ({
   },);
 
 
+  /* ---------------------------------------------------------------------------------------- */
 
-  const handleAddNpcs = (numberOfNpcs) => {
+  /* SWITCH MAPS */
+
+  /* ---------------------------------------------------------------------------------------- */
+  const currentLevel = useRef(0);
+  const [introEnded, setIntroEnded] = useState(false);
+  const [tableStyle, setTableStyle] = useState("floor-1");
+
+  useEffect(() => {
+    if (mapIndex === 0) {
+      setTableStyle("floor-1");
+    } else {
+      setTableStyle("floor-2");
+    }
+  }, [mapIndex]);
+
+  const handleAddNpcs = (numberOfNpcs, hpValue, strValue) => {
     if (numberOfNpcs !== 1) {
       numberOfNpcs = Math.floor(Math.random() * 3 + 1);
     }
 
+    numberOfNpcs = 1;
     for (let i = 0; i < numberOfNpcs; i++) {
       const newNpc = {
         id: i,
         npcX: i + 2,
         npcY: 5,
-        hp: 1,
-        strength: 1,
+        hp: hpValue,
+        strength: strValue,
         npcStyle: "npc-down",
       };
       addNpc(newNpc);
     }
   };
 
-  const [introEnded, setIntroEnded] = useState(false);
-
-
   useEffect(() => {
     if (mapIndex === 0) { // MAP 1
       if (npcs.length === 0 && playerX === 8 && playerY === 0) {
         if (currentLevel.current === 0) {
           currentLevel.current++;
-          handleAddNpcs(2);
-          setNpcStrength(2);
+          handleAddNpcs(2, 10, 2);
+          setNpcHP(10);
+          setNpcStr(2);
         }
         setPlayerY(8);
         changeMap(1);
+        if (!quests[1].done) {
+          setQuestDone(1, true);
+          setQuestProgress(1, 1);
+          increasePlayerHP(5);
+        }
       }
       else if (npcs.length > 0 && playerX === 8 && playerY === 0) {
         setPlayerY(1);
@@ -342,7 +380,7 @@ const MapBase = ({
                     showNextDialog();
                   } else {
                     setIntroEnded(true);
-                    handleAddNpcs(1);
+                    handleAddNpcs(1, 5, 1);
                   }
                 });
               }
@@ -355,11 +393,17 @@ const MapBase = ({
       if (npcs.length === 0 && playerX === 0 && playerY === 1) {
         if (currentLevel.current === 1) {
           currentLevel.current++;
-          handleAddNpcs(2);
-          setNpcStrength(3);
+          handleAddNpcs(2, 20, 4);
+          setNpcHP(20);
+          setNpcStr(4);
         }
         setPlayerX(8);
         changeMap(2);
+        if (!quests[2].done) {
+          setQuestDone(2, true);
+          setQuestProgress(2, 1);
+          increasePlayerHP(5);
+        }
       }
       else if (npcs.length > 0 && playerX === 0 && playerY === 1) {
         setPlayerX(1);
@@ -375,11 +419,17 @@ const MapBase = ({
       if (npcs.length === 0 && playerX === 1 && playerY === 9) {
         if (currentLevel.current === 2) {
           currentLevel.current++;
-          handleAddNpcs(2);
-          setNpcStrength(4);
+          handleAddNpcs(2, 30, 6);
+          setNpcHP(30);
+          setNpcStr(6);
         }
         setPlayerY(1);
         changeMap(3);
+        if (!quests[3].done) {
+          setQuestDone(3, true);
+          setQuestProgress(3, 1);
+          increasePlayerHP(5);
+        }
       }
       else if (npcs.length > 0 && playerX === 1 && playerY === 9) {
         setPlayerY(8);
@@ -396,11 +446,17 @@ const MapBase = ({
       if (npcs.length === 0 && playerX === 9 && playerY === 8) {
         if (currentLevel.current === 3) {
           currentLevel.current++;
-          handleAddNpcs(2);
-          setNpcStrength(5);
+          handleAddNpcs(2, 40, 8);
+          setNpcHP(40);
+          setNpcStr(8);
         }
         setPlayerX(1);
         changeMap(4);
+        if (!quests[4].done) {
+          setQuestDone(4, true);
+          setQuestProgress(4, 1);
+          increasePlayerHP(5);
+        }
       }
       else if (npcs.length > 0 && playerX === 9 && playerY === 8) {
         setPlayerX(8);
@@ -421,8 +477,21 @@ const MapBase = ({
       else if (npcs.length > 0 && playerX === 0 && playerY === 8) {
         setPlayerX(1);
       }
+
+      if (npcs.length === 0) {
+        // TODO - YOU WIN
+      }
     }
   }, [playerX, playerY, changeMap]);
+
+
+
+
+  /* ---------------------------------------------------------------------------------------- */
+
+  /* DOOR ANIMATIONS */
+
+  /* ---------------------------------------------------------------------------------------- */
 
   const [doorStyle, setDoorStyle] = useState("door-closed");
   const [doorAnimOpen, setDoorAnimOpen] = useState(true);
@@ -451,6 +520,42 @@ const MapBase = ({
     }
   }, [npcs.length, mapIndex, introEnded]);
 
+
+
+  /* ---------------------------------------------------------------------------------------- */
+
+  /* CHEST QUEST */
+
+  /* ---------------------------------------------------------------------------------------- */
+
+  const [chestStyle, setChestStyle] = useState("chest-close");
+  const [keyStyle, setKeyStyle] = useState("key-not-found");
+  const [gotKey, setGotKey] = useState(0);
+
+  useEffect(() => {
+    if ((((playerX === 3 || playerX === 5) && playerY === 1) || (playerX === 4 && playerY === 2)) && gotKey && mapIndex === 0) {
+      setChestStyle("chest-open");
+      if (!quests[0].done) {
+        increasePlayerHP(30);
+      }
+      setQuestDone(0, true);
+      setQuestProgress(0, 1);
+    } else if (!gotKey) {
+      setChestStyle("chest-close");
+    }
+  }, [playerX, playerY, gotKey, , setPlayerHP, mapIndex]);
+
+  useEffect(() => {
+    if (mapIndex === 1 && playerX === 6 && playerY === 1) {
+      setKeyStyle("");
+      setGotKey(1);
+    } else if (!gotKey) {
+      setKeyStyle("key");
+    }
+  }, [playerX, playerY, mapIndex, gotKey]);
+
+
+
   const renderTable = () => {
     return maps[mapIndex].matrix.map((row, rowIndex) => (
       <tr key={rowIndex}>
@@ -469,11 +574,17 @@ const MapBase = ({
           else if (cell === 4) {
             className = "ghost-cell";
           }
+          else if (cell === 6) {
+            className = chestStyle;
+          }
           else if (colIndex === playerX && rowIndex === playerY) {
             className = playerStyle;
           } else if (npcs.find(npc => npc.npcY === rowIndex && npc.npcX === colIndex)) {
             const npc = npcs.find(npc => npc.npcY === rowIndex && npc.npcX === colIndex);
             className = npc ? npc.npcStyle : "";
+          }
+          else if (cell === 7) {
+            className = keyStyle;
           }
 
           return <td key={colIndex} className={className}></td>;
@@ -481,7 +592,6 @@ const MapBase = ({
       </tr>
     ));
   };
-
 
   return (
     <div className="main-div-map">
@@ -495,35 +605,56 @@ const MapBase = ({
 };
 
 const mapStateToProps = (state) => ({
+  // Player State
   playerX: state.player.playerX,
   playerY: state.player.playerY,
-  npcs: state.npc.npcs,
   playerStyle: state.player.playerStyle,
   hpPlayer: state.player.hp,
   strPlayer: state.player.strength,
+
+  // NPC State
+  npcs: state.npc.npcs,
+
+  // Map State
   maps: state.map.maps,
   mapIndex: state.map.mapIndex,
+
+  // Quest State
+  quests: state.quest.quests,
 });
 
+
 const mapDispatchToProps = (dispatch) => ({
-  setNpcX: (id, x) => dispatch({ type: "SET_NPC_X", payload: { id, x } }),
-  setNpcY: (id, y) => dispatch({ type: "SET_NPC_Y", payload: { id, y } }),
+  // Player Actions
   setPlayerX: (x) => dispatch({ type: "SET_PLAYER_X", payload: { x } }),
   setPlayerY: (y) => dispatch({ type: "SET_PLAYER_Y", payload: { y } }),
-  setNpcTime: (time) => dispatch({ type: "SET_NPC_TIME", payload: { time } }),
   getDmgPlayer: (dmg) => dispatch({ type: "GET_DMG_PLAYER", payload: { dmg } }),
-  getDmgNpc: (id, dmg) => dispatch({ type: "GET_DMG_NPC", payload: { id, dmg } }),
   setPlayerHP: (hp) => dispatch({ type: "SET_PLAYER_HP", payload: { hp } }),
-  setNpcHP: (id, hp) => dispatch({ type: "SET_NPC_HP", payload: { id, hp } }),
-  increasePlayerStr: () => dispatch({ type: "INCREASE_PLAYER_STR" }),
-  setNpcCardStyle: (style) => dispatch({ type: "SET_NPC_CARD_STYLE", payload: { style } }),
+  increasePlayerHP: (hp) => dispatch({ type: "INCREASE_PLAYER_HP", payload: { hp } }),
+  increasePlayerStr: (value) => dispatch({ type: "INCREASE_PLAYER_STR", payload: { value } }),
   setPlayerCardStyle: (style) => dispatch({ type: "SET_PLAYER_CARD_STYLE", payload: { style } }),
-  removeNpc: (id) => dispatch({ type: "REMOVE_NPC", payload: { id } }),
-  changeMap: (mapIndex) => dispatch({ type: "CHANGE_MAP", payload: { mapIndex } }),
-  addNpc: (npc) => dispatch({ type: "ADD_NPC", payload: { npc } }),
-  setNpcStrength: (str) => dispatch({ type: "SET_ALL_NPC_STRENGTH", payload: { str } }),
-  removeAllNpcs: () => dispatch({ type: "REMOVE_ALL_NPCS" }),
   resetPlayerStrength: () => dispatch({ type: "RESET_PLAYER_STRENGTH" }),
+
+  // NPC Actions
+  setNpcX: (id, x) => dispatch({ type: "SET_NPC_X", payload: { id, x } }),
+  setNpcY: (id, y) => dispatch({ type: "SET_NPC_Y", payload: { id, y } }),
+  setNpcTime: (time) => dispatch({ type: "SET_NPC_TIME", payload: { time } }),
+  getDmgNpc: (id, dmg) => dispatch({ type: "GET_DMG_NPC", payload: { id, dmg } }),
+  setNpcHP: (hp) => dispatch({ type: "SET_NPC_HP", payload: { hp } }),
+  setNpcStr: (str) => dispatch({ type: "SET_NPC_STR", payload: { str } }),
+  setNpcCardStyle: (style) => dispatch({ type: "SET_NPC_CARD_STYLE", payload: { style } }),
+  removeNpc: (id) => dispatch({ type: "REMOVE_NPC", payload: { id } }),
+  addNpc: (npc) => dispatch({ type: "ADD_NPC", payload: { npc } }),
+  removeAllNpcs: () => dispatch({ type: "REMOVE_ALL_NPCS" }),
+
+  // Map Actions
+  changeMap: (mapIndex) => dispatch({ type: "CHANGE_MAP", payload: { mapIndex } }),
+
+  // Quest Actions
+  setQuestDone: (id, value) => dispatch({ type: "SET_QUEST_DONE", payload: { id, value } }),
+  setQuestProgress: (id, value) => dispatch({ type: "SET_QUEST_PROGRESS", payload: { id, value } }),
+  increaseQuestProgress: (id, value) => dispatch({ type: "INCREASE_QUEST_PROGRESS", payload: { id, value } }),
+  resetAllQuests: () => dispatch({ type: "RESET_ALL_QUESTS" }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapBase);
