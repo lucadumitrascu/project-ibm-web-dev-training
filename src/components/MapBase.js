@@ -10,14 +10,13 @@ import CombatCard from "./CombatCard";
 import ghostImg from "../assets/ghost.png";
 import playerImg from "../assets/player.png"
 
-
 const MapBase = ({
   // Props for NPCs
-  npcs, addNpc, removeNpc, setNpcX, setNpcY, setNpcTime, setNpcHP, setNpcCardStyle, setNpcStr, removeAllNpcs,
+  npcs, addNpc, removeNpc, removeAllNpcs, setNpcX, setNpcY, setNpcTime, setNpcStr, setNpcHP, getDmgNpc, setNpcCardStyle,
 
   // Props for Player
-  playerStyle, playerX, playerY, setPlayerX, setPlayerY, hpPlayer, strPlayer, setPlayerHP, getDmgPlayer, getDmgNpc,
-  increasePlayerStr, increasePlayerHP, setPlayerCardStyle, resetPlayerStrength,
+  playerStyle, playerX, playerY, setPlayerX, setPlayerY, hpPlayer, resetPlayerHP, increasePlayerHP,
+  strPlayer, resetPlayerStr, getDmgPlayer, increasePlayerStr, setPlayerCardStyle,
 
   // Props for Quests
   quests, setQuestProgress, setQuestDone, increaseQuestProgress, resetAllQuests,
@@ -34,7 +33,6 @@ const MapBase = ({
   /* ---------------------------------------------------------------------------------------- */
 
   const MySwal = withReactContent(Swal);
-  const endCombatSwal = withReactContent(Swal);
   const hpPlayerRef = useRef(hpPlayer);
   const hpNpcRefs = useRef({});
 
@@ -142,7 +140,7 @@ const MapBase = ({
                     if (hpPlayerRef.current <= 0) {
                       stopGame = true;
 
-                      endCombatSwal.fire({
+                      MySwal.fire({
                         title: 'You died!',
                         confirmButtonText: 'Restart game',
                         showConfirmButton: true,
@@ -152,14 +150,16 @@ const MapBase = ({
                       }).then(() => {
                         setPlayerX(4);
                         setPlayerY(8);
-                        setPlayerHP(5);
+                        resetPlayerHP(5);
                         setNpcTime(400);
-                        resetPlayerStrength();
+                        resetPlayerStr();
                         removeAllNpcs();
                         setNpcStr(1);
                         setNpcHP(5);
                         setIntroEnded(false);
+                        setExitDialogEnded(false);
                         resetAllQuests();
+                        setGotKey(0);
                         changeMap(0);
                         currentLevel.current = 0;
                       });
@@ -218,8 +218,8 @@ const MapBase = ({
                     setNpcCardStyle('combat-card-container');
                     if (hpNpcRefs.current[npc.id] <= 0) {
                       stopGame = true;
-                      endCombatSwal.fire({
-                        title: 'You Win!',
+                      MySwal.fire({
+                        title: 'You won this battle!',
                         text: 'Your strength will be increased by 1!',
                         confirmButtonText: 'Continue',
                         showConfirmButton: true,
@@ -287,6 +287,7 @@ const MapBase = ({
   /* ---------------------------------------------------------------------------------------- */
   const currentLevel = useRef(0);
   const [introEnded, setIntroEnded] = useState(false);
+  const [exitDialogEnded, setExitDialogEnded] = useState(false);
   const [tableStyle, setTableStyle] = useState("floor-1");
 
   useEffect(() => {
@@ -302,7 +303,6 @@ const MapBase = ({
       numberOfNpcs = Math.floor(Math.random() * 3 + 1);
     }
 
-    numberOfNpcs = 1;
     for (let i = 0; i < numberOfNpcs; i++) {
       const newNpc = {
         id: i,
@@ -355,18 +355,17 @@ const MapBase = ({
 
         function showNextDialog() {
           if (step < dialog.length) {
-            Swal.fire({
+            MySwal.fire({
               html: `
-          <div id="div-modal-intro" class="div-modal-intro">
-              <img id="modalImage" src="" alt="Character Image" style="width: 100px; height: 100px;" />
-              <p id="modalText"></p>
-              
-          </div>
-          <button id="nextButton">Next</button>
-        `,
+                  <div id="div-modal-intro" class="div-modal-intro">
+                    <img id="modalImage" src="" alt="Character Image" style="width: 100px; height: 100px;" />
+                    <p id="modalText"></p>
+                  </div>
+                  <button id="nextButton">Next</button>
+                  `,
               showConfirmButton: false,
               customClass: {
-                popup: 'modal-intro'
+                popup: 'modal-intro-end'
               },
               didOpen: () => {
                 document.getElementById('modalImage').src = dialog[step].img;
@@ -375,7 +374,7 @@ const MapBase = ({
 
                 document.getElementById('nextButton').addEventListener('click', function () {
                   step++;
-                  Swal.close();
+                  MySwal.close();
                   if (step < dialog.length) {
                     showNextDialog();
                   } else {
@@ -478,8 +477,81 @@ const MapBase = ({
         setPlayerX(1);
       }
 
-      if (npcs.length === 0) {
-        // TODO - YOU WIN
+      if (npcs.length === 0 && playerX === 8 && playerY === 9) {
+
+        MySwal.fire({
+          title: 'Game finished!',
+          confirmButtonText: 'Restart game',
+          showConfirmButton: true,
+          customClass: {
+            popup: 'modal-end-combat'
+          },
+        }).then(() => {
+          setPlayerX(4);
+          setPlayerY(8);
+          resetPlayerHP(5);
+          setNpcTime(400);
+          resetPlayerStr();
+          removeAllNpcs();
+          setNpcStr(1);
+          setNpcHP(5);
+          setIntroEnded(false);
+          setExitDialogEnded(false);
+          resetAllQuests();
+          setGotKey(0);
+          changeMap(0);
+          currentLevel.current = 0;
+        });
+      } else if (npcs.length > 0 && playerX === 8 && playerY === 9) {
+        setPlayerY(8);
+      }
+
+      if (npcs.length === 0 && !exitDialogEnded) {
+        if ((playerX === 7 && playerY === 7) || (playerX === 8 && playerY === 8) || (playerX === 8 && playerY === 6)) {
+
+          let step = 0;
+          const dialog = [
+            { text: 'Ghost: "Wow... You really did it!"', img: ghostImg },
+            { text: 'Player: "It was a great adventure!"', img: playerImg },
+            { text: 'Ghost: "You can leave the dungeon if you go down, or... you can explore the map by going back."', img: ghostImg },
+            { text: 'Player: "I think I\'ll take a moment to rest before deciding."', img: playerImg },
+            { text: 'Ghost: "Whatever you choose, know that you\'ve done something remarkable. Farewell, brave adventurer."', img: ghostImg },
+          ];
+
+          function showNextDialog() {
+            if (step < dialog.length) {
+              MySwal.fire({
+                html: `
+                          <div id="div-modal-intro" class="div-modal-intro">
+                           <img id="modalImage" src="" alt="Character Image" style="width: 100px; height: 100px;" />
+                           <p id="modalText"></p>
+                          </div>
+                          <button id="nextButton">Next</button>
+                        `,
+                showConfirmButton: false,
+                customClass: {
+                  popup: 'modal-intro-end'
+                },
+                didOpen: () => {
+                  document.getElementById('modalImage').src = dialog[step].img;
+                  document.getElementById('modalText').textContent = dialog[step].text;
+                  document.getElementById('nextButton').textContent = step < dialog.length - 1 ? 'Next' : 'Continue';
+
+                  document.getElementById('nextButton').addEventListener('click', function () {
+                    step++;
+                    MySwal.close();
+                    if (step < dialog.length) {
+                      showNextDialog();
+                    } else {
+                      setExitDialogEnded(true);
+                    }
+                  });
+                }
+              });
+            }
+          }
+          showNextDialog();
+        }
       }
     }
   }, [playerX, playerY, changeMap]);
@@ -536,14 +608,14 @@ const MapBase = ({
     if ((((playerX === 3 || playerX === 5) && playerY === 1) || (playerX === 4 && playerY === 2)) && gotKey && mapIndex === 0) {
       setChestStyle("chest-open");
       if (!quests[0].done) {
-        increasePlayerHP(30);
+        increasePlayerHP(20);
       }
       setQuestDone(0, true);
       setQuestProgress(0, 1);
     } else if (!gotKey) {
       setChestStyle("chest-close");
     }
-  }, [playerX, playerY, gotKey, , setPlayerHP, mapIndex]);
+  }, [playerX, playerY, gotKey, resetPlayerHP, mapIndex]);
 
   useEffect(() => {
     if (mapIndex === 1 && playerX === 6 && playerY === 1) {
@@ -628,23 +700,23 @@ const mapDispatchToProps = (dispatch) => ({
   // Player Actions
   setPlayerX: (x) => dispatch({ type: "SET_PLAYER_X", payload: { x } }),
   setPlayerY: (y) => dispatch({ type: "SET_PLAYER_Y", payload: { y } }),
-  getDmgPlayer: (dmg) => dispatch({ type: "GET_DMG_PLAYER", payload: { dmg } }),
-  setPlayerHP: (hp) => dispatch({ type: "SET_PLAYER_HP", payload: { hp } }),
-  increasePlayerHP: (hp) => dispatch({ type: "INCREASE_PLAYER_HP", payload: { hp } }),
-  increasePlayerStr: (value) => dispatch({ type: "INCREASE_PLAYER_STR", payload: { value } }),
   setPlayerCardStyle: (style) => dispatch({ type: "SET_PLAYER_CARD_STYLE", payload: { style } }),
-  resetPlayerStrength: () => dispatch({ type: "RESET_PLAYER_STRENGTH" }),
+  getDmgPlayer: (dmg) => dispatch({ type: "GET_DMG_PLAYER", payload: { dmg } }),
+  increasePlayerHP: (hp) => dispatch({ type: "INCREASE_PLAYER_HP", payload: { hp } }),
+  resetPlayerHP: (hp) => dispatch({ type: "RESET_PLAYER_HP", payload: { hp } }),
+  increasePlayerStr: (value) => dispatch({ type: "INCREASE_PLAYER_STR", payload: { value } }),
+  resetPlayerStr: () => dispatch({ type: "RESET_PLAYER_STR" }),
 
   // NPC Actions
   setNpcX: (id, x) => dispatch({ type: "SET_NPC_X", payload: { id, x } }),
   setNpcY: (id, y) => dispatch({ type: "SET_NPC_Y", payload: { id, y } }),
-  setNpcTime: (time) => dispatch({ type: "SET_NPC_TIME", payload: { time } }),
+  setNpcCardStyle: (style) => dispatch({ type: "SET_NPC_CARD_STYLE", payload: { style } }),
   getDmgNpc: (id, dmg) => dispatch({ type: "GET_DMG_NPC", payload: { id, dmg } }),
   setNpcHP: (hp) => dispatch({ type: "SET_NPC_HP", payload: { hp } }),
   setNpcStr: (str) => dispatch({ type: "SET_NPC_STR", payload: { str } }),
-  setNpcCardStyle: (style) => dispatch({ type: "SET_NPC_CARD_STYLE", payload: { style } }),
-  removeNpc: (id) => dispatch({ type: "REMOVE_NPC", payload: { id } }),
+  setNpcTime: (time) => dispatch({ type: "SET_NPC_TIME", payload: { time } }),
   addNpc: (npc) => dispatch({ type: "ADD_NPC", payload: { npc } }),
+  removeNpc: (id) => dispatch({ type: "REMOVE_NPC", payload: { id } }),
   removeAllNpcs: () => dispatch({ type: "REMOVE_ALL_NPCS" }),
 
   // Map Actions

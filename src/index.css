@@ -247,7 +247,7 @@ td {
 }
 
 
-.modal-intro {
+.modal-intro-end {
   background-image: url(assets/combatBackground.jpg);
   background-size: contain;
   color: white;
@@ -653,8 +653,31 @@ td {
 }
 
 .modal-end-combat {
-  text-shadow: none !important;
+  background-image: url(assets/combatBackground.jpg);
+  color: white;
 }
+
+.modal-end-combat button {
+  background-image: url(assets/buttonsBackground.jpeg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 1px solid white;
+  font-weight: bold;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal-end-combat button:hover {
+  background-image: url(assets/buttonsBackground.jpeg) !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  opacity: 0.7 !important;
+}
+
 
 .modal button:hover {
   cursor: pointer;

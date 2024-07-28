@@ -43,7 +43,7 @@ const initialState = {
       done: false,
       target: 5
     }
-  ] // id, quest, progress, done
+  ]
 };
 
 const questControllerReducer = (state = initialState, action) => {

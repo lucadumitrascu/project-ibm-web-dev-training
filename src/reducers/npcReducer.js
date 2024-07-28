@@ -13,8 +13,42 @@ const npcControllerReducer = (state = initialState, action) => {
         ...state,
         npcs: [...state.npcs, action.payload.npc]
       };
+    case 'SET_NPC_TIME':
+      return { ...state, time: action.payload.time };
+    case 'SET_NPC_HP':
+      return { ...state, hp: action.payload.hp };
     case 'SET_NPC_STR':
       return { ...state, strength: action.payload.str };
+    case 'REMOVE_NPC':
+      return {
+        ...state,
+        npcs: state.npcs.filter(npc => npc.id !== action.payload.id)
+      };
+    case 'REMOVE_ALL_NPCS':
+      return {
+        ...state,
+        npcs: []
+      };
+
+    case 'GET_DMG_NPC':
+      return {
+        ...state,
+        npcs: state.npcs.map(npc =>
+          npc.id === action.payload.id ? { ...npc, hp: npc.hp - action.payload.dmg } : npc
+        )
+      };
+    case 'SET_NPC_CARD_STYLE':
+      return {
+        ...state,
+        npcCardStyle: action.payload.style
+      };
+    case 'SET_NPC_STYLE':
+      return {
+        ...state,
+        npcs: state.npcs.map(npc =>
+          npc.id === action.payload.id ? { ...npc, npcStyle: action.payload.style } : npc
+        )
+      };
     case 'SET_NPC_X':
       return {
         ...state,
@@ -27,24 +61,6 @@ const npcControllerReducer = (state = initialState, action) => {
         ...state,
         npcs: state.npcs.map(npc =>
           npc.id === action.payload.id ? { ...npc, npcY: action.payload.y } : npc
-        )
-      };
-    case 'SET_NPC_HP':
-      return { ...state, hp: action.payload.hp };
-    case 'GET_DMG_NPC':
-      return {
-        ...state,
-        npcs: state.npcs.map(npc =>
-          npc.id === action.payload.id ? { ...npc, hp: npc.hp - action.payload.dmg } : npc
-        )
-      };
-    case 'SET_NPC_TIME':
-      return { ...state, time: action.payload.time };
-    case 'SET_NPC_STYLE':
-      return {
-        ...state,
-        npcs: state.npcs.map(npc =>
-          npc.id === action.payload.id ? { ...npc, npcStyle: action.payload.style } : npc
         )
       };
     case 'npcINCREASEX':
@@ -74,21 +90,6 @@ const npcControllerReducer = (state = initialState, action) => {
         npcs: state.npcs.map(npc =>
           npc.id === action.payload.id && npc.npcY > 1 ? { ...npc, npcY: npc.npcY - 1 } : npc
         )
-      };
-    case 'REMOVE_NPC':
-      return {
-        ...state,
-        npcs: state.npcs.filter(npc => npc.id !== action.payload.id)
-      };
-    case 'REMOVE_ALL_NPCS':
-      return {
-        ...state,
-        npcs: []
-      };
-    case 'SET_NPC_CARD_STYLE':
-      return {
-        ...state,
-        npcCardStyle: action.payload.style
       };
     default:
       return state;
