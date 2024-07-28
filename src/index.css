@@ -124,7 +124,7 @@ code {
 
 .p-quest-title,
 .p-quest-progress {
-  color: rgb(144, 88, 255);
+  color: rgb(91, 200, 107);
   font-weight: bold;
   font-size: 15px;
 }
@@ -698,30 +698,26 @@ td {
 }
 
 .modal-button-attack {
-  background-color: #ff4c4c;
+  background-image: url(assets/buttonsBackground.jpeg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
   border: 2px solid #b30000;
   color: white;
 }
 
-.modal-button-attack:hover {
-  background-color: #ff1a1a;
-  transform: scale(1.1);
+.modal-button-attack-clicked,
+.modal-button-defend-clicked {
+  opacity: 0.5 !important;
 }
 
 .modal-button-defend {
-  background-color: #4c6aff;
+  background-image: url(assets/buttonsBackground.jpeg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
   border: 2px solid #0033cc;
   color: white;
-
-}
-
-.modal-button-defend:hover {
-  background-color: #1a53ff;
-  transform: scale(1.1);
-}
-
-.modal button:active {
-  transform: scale(0.9);
 }
 
 .combat-card-container {

@@ -106,11 +106,11 @@ const MapBase = ({
             let stopGame = false;
 
             const enterCombatMode = (attackInterval) => {
-              defendButton.disabled = true;
-              attackButton.disabled = true;
+
+              attackButton.disabled = false;
+              defendButton.disabled = false;
 
               const performNPCAttack = () => {
-                defendButton.disabled = false;
                 setNpcCardStyle('combat-card-container combat-card-npc-pre-attack');
 
                 setTimeout(() => {
@@ -171,17 +171,22 @@ const MapBase = ({
                     }, 350);
 
                     if (!stopGame) {
-                      let newAttackInterval = Math.floor(Math.random() * 2000 + 1000) + 250;
-                      setTimeout(performPlayerAttack, newAttackInterval);
-                      defendButton.disabled = true;
+                      let newAttackInterval = Math.floor(Math.random() * 2000 + 1000);
+                      setTimeout(() => {
+                        if (attackClicked) { attackButton.disabled = true; attackClicked = false; };
+                        performPlayerAttack();
+                      }, newAttackInterval);
+
+                      defendButton.disabled = false;
                       defendClicked = false;
+                      defendButton.classList.remove("modal-button-defend-clicked");
+                      attackButton.classList.remove("modal-button-attack-clicked");
                     }
                   }, 750);
                 }, 500);
               };
 
               const performPlayerAttack = () => {
-                attackButton.disabled = false;
                 setPlayerCardStyle('combat-card-container combat-card-player-pre-attack');
 
                 setTimeout(() => {
@@ -247,10 +252,19 @@ const MapBase = ({
                     }, 350);
 
                     if (!stopGame) {
-                      let newAttackInterval = Math.floor(Math.random() * 2000 + 1000) + 250;
-                      setTimeout(performNPCAttack, newAttackInterval);
-                      attackButton.disabled = true;
+                      let newAttackInterval = Math.floor(Math.random() * 2000 + 1000);
+                      setTimeout(() => {
+                        if (defendClicked) {
+                          defendClicked = false;
+                          defendButton.disabled = true;
+                        };
+                        performNPCAttack();
+                      }, newAttackInterval);
+
                       attackClicked = false;
+                      attackButton.disabled = false;
+                      attackButton.classList.remove("modal-button-attack-clicked");
+                      defendButton.classList.remove("modal-button-defend-clicked");
                     }
                   }, 750);
                 }, 500);
@@ -259,8 +273,12 @@ const MapBase = ({
               if (firstEntry) {
                 setTimeout(() => {
                   firstEntry = false;
+                  if (defendClicked) {
+                    defendClicked = false;
+                    defendButton.disabled = true;
+                  };
                   performNPCAttack();
-                }, attackInterval + 250);
+                }, attackInterval);
               }
             };
 
@@ -268,10 +286,12 @@ const MapBase = ({
 
             attackButton.addEventListener('click', () => {
               attackClicked = true;
+              attackButton.classList.add("modal-button-attack-clicked");
             });
 
             defendButton.addEventListener('click', () => {
               defendClicked = true;
+              defendButton.classList.add("modal-button-defend-clicked");
             });
           }
         });
@@ -303,6 +323,7 @@ const MapBase = ({
       numberOfNpcs = Math.floor(Math.random() * 3 + 1);
     }
 
+    numberOfNpcs = 1;
     for (let i = 0; i < numberOfNpcs; i++) {
       const newNpc = {
         id: i,
