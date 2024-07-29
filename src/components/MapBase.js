@@ -342,8 +342,14 @@ const MapBase = ({
   useEffect(() => {
     if (mapIndex === 0) {
       setTableStyle("floor-1");
-    } else {
+    } else if (mapIndex === 1) {
       setTableStyle("floor-2");
+    } else if (mapIndex === 2) {
+      setTableStyle("floor-3");
+    } else if (mapIndex === 3) {
+      setTableStyle("floor-4");
+    } else if (mapIndex === 4) {
+      setTableStyle("floor-5");
     }
   }, [mapIndex]);
 
@@ -351,7 +357,7 @@ const MapBase = ({
     if (numberOfNpcs !== 1) {
       numberOfNpcs = Math.floor(Math.random() * 3 + 1);
     }
-    numberOfNpcs = 0;
+    numberOfNpcs = 1;
     for (let i = 0; i < numberOfNpcs; i++) {
       const newNpc = {
         id: i,

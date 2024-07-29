@@ -157,11 +157,29 @@ code {
   background-position: center;
 }
 
+.floor-3 {
+  border-collapse: collapse;
+  background-image: url(/src/assets/floor3.png);
+  background-position: center;
+}
+
+.floor-4 {
+  border-collapse: collapse;
+  background-image: url(/src/assets/floor4.png);
+  background-position: center;
+}
+
+.floor-5 {
+  border-collapse: collapse;
+  background-image: url(/src/assets/floor5.png);
+  background-position: center;
+}
+
 tr,
 td {
   width: 45px;
   height: 45px;
-  border: 1px solid black;
+  border: none;
 }
 
 .player-cell {
@@ -176,6 +194,7 @@ td {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  border: 0.5px solid black;
 }
 
 @keyframes doorOpen {
