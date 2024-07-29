@@ -25,6 +25,31 @@ const MapBase = ({
   maps, mapIndex, changeMap
 }) => {
 
+  /* ---------------------------------------------------------------------------------------- */
+
+  /* TOAST */
+
+  /* ---------------------------------------------------------------------------------------- */
+
+  useEffect(() => {
+    if (!document.getElementById("toast")) {
+      createToast();
+    }
+  }, []);
+
+  function createToast() {
+    var toast = document.createElement("div");
+    toast.id = "toast";
+    document.body.appendChild(toast);
+  }
+
+  function showToast(message) {
+    let toast = document.getElementById("toast");
+    toast.innerText = message;
+    toast.className = "show";
+    setTimeout(function () { toast.className = toast.className.replace("show", ""); }, 5000);
+  }
+
 
   /* ---------------------------------------------------------------------------------------- */
 
@@ -158,6 +183,8 @@ const MapBase = ({
                         setNpcHP(5);
                         setIntroEnded(false);
                         setExitDialogEnded(false);
+                        setDoorAnimOpen(true);
+                        setDoorAnimClose(true);
                         resetAllQuests();
                         setGotKey(0);
                         changeMap(0);
@@ -211,6 +238,7 @@ const MapBase = ({
                           setQuestDone(5, true);
                           setQuestProgress(5, 1);
                           increasePlayerHP(5);
+                          showToast("Deal 1 critical hit quest done. Reward: 5hp.");
                         }
                       }
                     }, 400);
@@ -240,6 +268,7 @@ const MapBase = ({
                           if (quests[6].progress === quests[6].target - 1) {
                             increasePlayerStr(2);
                             setQuestDone(6, true);
+                            showToast("Defeat 5 enemies quest done. Reward: 2STR.");
                           }
                         }
                       });
@@ -322,8 +351,7 @@ const MapBase = ({
     if (numberOfNpcs !== 1) {
       numberOfNpcs = Math.floor(Math.random() * 3 + 1);
     }
-
-    numberOfNpcs = 1;
+    numberOfNpcs = 0;
     for (let i = 0; i < numberOfNpcs; i++) {
       const newNpc = {
         id: i,
@@ -336,6 +364,8 @@ const MapBase = ({
       addNpc(newNpc);
     }
   };
+
+
 
   useEffect(() => {
     if (mapIndex === 0) { // MAP 1
@@ -352,6 +382,7 @@ const MapBase = ({
           setQuestDone(1, true);
           setQuestProgress(1, 1);
           increasePlayerHP(5);
+          showToast("Finish level 1 quest done. Reward: 5HP.");
         }
       }
       else if (npcs.length > 0 && playerX === 8 && playerY === 0) {
@@ -423,6 +454,7 @@ const MapBase = ({
           setQuestDone(2, true);
           setQuestProgress(2, 1);
           increasePlayerHP(5);
+          showToast("Finish level 2 quest done. Reward: 5HP.");
         }
       }
       else if (npcs.length > 0 && playerX === 0 && playerY === 1) {
@@ -449,6 +481,7 @@ const MapBase = ({
           setQuestDone(3, true);
           setQuestProgress(3, 1);
           increasePlayerHP(5);
+          showToast("Finish level 3 quest done. Reward: 5HP.");
         }
       }
       else if (npcs.length > 0 && playerX === 1 && playerY === 9) {
@@ -476,6 +509,7 @@ const MapBase = ({
           setQuestDone(4, true);
           setQuestProgress(4, 1);
           increasePlayerHP(5);
+          showToast("Finish level 4 quest done. Reward: 5HP.");
         }
       }
       else if (npcs.length > 0 && playerX === 9 && playerY === 8) {
@@ -518,6 +552,8 @@ const MapBase = ({
           setNpcHP(5);
           setIntroEnded(false);
           setExitDialogEnded(false);
+          setDoorAnimOpen(true);
+          setDoorAnimClose(true);
           resetAllQuests();
           setGotKey(0);
           changeMap(0);
@@ -630,6 +666,7 @@ const MapBase = ({
       setChestStyle("chest-open");
       if (!quests[0].done) {
         increasePlayerHP(20);
+        showToast("Open the chest quest done. Reward: 20HP.");
       }
       setQuestDone(0, true);
       setQuestProgress(0, 1);

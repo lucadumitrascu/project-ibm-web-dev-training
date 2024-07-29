@@ -1,4 +1,8 @@
 body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   margin: 0;
   padding: 0;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -978,4 +982,52 @@ td {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+
+
+/* TOAST */
+#toast {
+  visibility: hidden;
+  min-width: 250px;
+  background-image: url(assets/combatBackground.jpg);
+  border: 2px solid white;
+  color: rgb(161, 248, 174);
+  text-align: center;
+  border-radius: 5px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  bottom: 30px;
+  right: 30px;
+  font-size: 25px;
+}
+
+#toast.show {
+  visibility: visible;
+  animation: slidein 0.5s, slideout 0.5s 4.5s;
+}
+
+@keyframes slidein {
+  from {
+    right: -300px;
+    opacity: 0;
+  }
+
+  to {
+    right: 30px;
+    opacity: 1;
+  }
+}
+
+@keyframes slideout {
+  from {
+    right: 30px;
+    opacity: 1;
+  }
+
+  to {
+    right: -300px;
+    opacity: 0;
+  }
 }
